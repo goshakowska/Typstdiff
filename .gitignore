@@ -1,3 +1,4 @@
 /poetry.lock
 /tests/__pycache__
 /typstdiff/__pycache__
+/dist
