@@ -1,6 +1,8 @@
-# Welcome to MkDocs
+# TypstDiff documentation
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+
+For the source code visit [Gitlab](https://gitlab-stud.elka.pw.edu.pl/dferfeck/zprp-typstdiff).
+
 
 ## Commands
 
@@ -14,4 +16,6 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
     mkdocs.yml    # The configuration file.
     docs/
         index.md  # The documentation homepage.
+        about.md  # About project
         ...       # Other markdown pages, images and other files.
+
