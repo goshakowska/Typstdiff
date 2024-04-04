@@ -1,1 +1,12 @@
-site_name: My Docs
+site_name: TypstDiff
+site_url: https://typstdiff-documentation.com/
+
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Developer Guide: project_configuration.md
+  - User Guide: user_how_to.md
+  - Bibliography: bibliography.md
+markdown_extensions:
+  - tables
