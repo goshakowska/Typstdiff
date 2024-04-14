@@ -15,3 +15,4 @@
 <li> <a href="https://docs.python.org/3/library/pathlib.html">Pathlib</a></li>
 <li> <a href="https://python-poetry.org/">Poetry</a></li>
 <li> <a href="https://tox.wiki/en/4.14.1/user_guide.html">Tox</a></li>
+<li> <a href="https://github.com/xlwings/jsondiff">JSONDiff package repository</a></li>

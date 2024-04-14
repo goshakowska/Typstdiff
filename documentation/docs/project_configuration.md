@@ -86,7 +86,7 @@ TODO (or not)
 
 ## Code Convention
 
-Naming conventions follow PEP8:
+Naming conventions follow PEP8 standard:
 
 |  Type      |  Convention                                          |  Example                       |
 | -----------|------------------------------------------------------|------------------------------- |
