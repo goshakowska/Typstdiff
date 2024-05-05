@@ -42,6 +42,8 @@ def apply_diffs_recursive(diffs, target, current_action, parsed_old_file):
                 if isinstance(parsed_old_file, list):
                     if len(parsed_old_file) <= key:
                         apply_diffs_recursive(value, target[key], current_action, parsed_old_file)
+                    else:
+                        apply_diffs_recursive(value, target[key], current_action, parsed_old_file[key])
                 else:
                     apply_diffs_recursive(value, target[key], current_action, parsed_old_file[key])
             elif isinstance(value, list):
