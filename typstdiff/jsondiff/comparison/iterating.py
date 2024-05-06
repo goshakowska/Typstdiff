@@ -21,41 +21,57 @@ def apply_format_to_para(para, underline_strike):
     print("here")
     print(para)
     if isinstance(para, dict):
-        if isinstance(para["c"], list):
-            for i, element in enumerate(para["c"]):
-                print(element)
-                # para
-                if isinstance(element, dict):
-                    if element.get("t") == "Str":
-                        para["c"][i] = {"t": underline_strike, "c": [element]}
-                    else:
-                        apply_format_to_para(element, underline_strike)
-                # header
-                elif isinstance(element, list):
+        if "c" in para.keys():
+            if isinstance(para["c"], list):
+                for i, element in enumerate(para["c"]):
                     print(element)
-                    for i in range(len(element)):
-                        apply_format_to_para(element[i], "Underline")
-        else:
-            para_copy = copy.deepcopy(para)
-            para["t"] = underline_strike
+                    # para
+                    if isinstance(element, dict):
+                        if element.get("t") == "Str":
+                            para["c"][i] = {"t": underline_strike, "c": [element]}
+                        else:
+                            apply_format_to_para(element, underline_strike)
+                    # header
+                    elif isinstance(element, list):
+                        print(element)
+                        for i in range(len(element)):
+                            apply_format_to_para(element[i], "Underline")
+            else:
+                para_copy = copy.deepcopy(para)
+                para["t"] = underline_strike
+                para["c"] = [para_copy]
+                print(para)
+        elif para["t"] in ("Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"): # WHITE CHAR
+            para_copy = copy.deepcopy( para)
+            para['t'] = underline_strike
             para["c"] = [para_copy]
-            print(para)
+
+
 
 def delete_for_para(para, strike):
     print("delete_for_para")
     print(para["c"])
     for i, element in enumerate(para["c"]):
         if isinstance(element, dict):
-            print(element)
-            if element.get("t") == "Str":
-                para["c"][i] = {"t": strike, "c": [element]}
-                print(para["c"])
+            if element["t"] in ("Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"): # WHITE CHAR
+                para_copy = copy.deepcopy( para)
+                para['t'] = strike
+                para["c"] = [para_copy]
             else:
-                print("AAAAA")
-                delete_for_para(element, strike)
+                print("rrrr")
+                print(element)
+                if element.get("t") == "Str":
+                    print("VVSFAFDA")
+                    print(para["c"])
+                    para["c"][i] = {"t": strike, "c": [element]}
+                    print(para["c"])
+                else:
+                    print("AAAAA")
+                    delete_for_para(element, strike)
         if isinstance(element, list):
             print(element)
             for i, value in enumerate(element):
+                print(f"value in list: {value}")
                 if isinstance(value, dict):
                     value_copy = copy.deepcopy(value)
                     value["t"] = strike
@@ -160,14 +176,21 @@ def apply_diffs_recursive(diffs, target, current_action, parsed_old_file):
                             to_insert = delete_for_para(parsed_old_file[delete_position][i], "Strikeout") # przecież to nic nie zwraca
                             to_insert = [{"t": "Para", "c": to_insert}]
                             print(f"to_insert {to_insert}")
+                elif parsed_old_file[delete_position]["t"] == "Para":
+                        print("bbb")
+                        print(parsed_old_file[delete_position])
+                        to_insert = delete_for_para(parsed_old_file[delete_position], "Strikeout")
+                        to_insert = parsed_old_file[delete_position]
+                        print(f"to_insert {to_insert}")
+                
                 elif parsed_old_file[delete_position]["t"] == "Header":
-                   
                         print(parsed_old_file[delete_position])
                         delete_for_para(parsed_old_file[delete_position], "Strikeout")
                         print(parsed_old_file[delete_position])
                         to_insert = parsed_old_file[delete_position]
                         print(f"to_insert {to_insert}")
                 else:
+                    print("NNNNNNNNNNN")
                     to_insert = {"t": "Strikeout", "c": [deleted_copy]}
                 target.insert(delete_position, to_insert)
     except Exception as e:
