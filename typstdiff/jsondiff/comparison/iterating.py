@@ -18,23 +18,48 @@ diffs = diff(parsed_old_file, parsed_changed_file, syntax='explicit', dump=False
 print(diffs)
 
 def apply_format_to_para(para, underline_strike):
-    for i, element in enumerate(para["c"]):
-        if isinstance(element, dict):
-            if element.get("t") == "Str":
-                para["c"][i] = {"t": underline_strike, "c": [element]}
-            elif element.get("t") == "Para":
-                apply_format_to_para(element, underline_strike)
+    print("here")
+    print(para)
+    if isinstance(para, dict):
+        if isinstance(para["c"], list):
+            for i, element in enumerate(para["c"]):
+                print(element)
+                # para
+                if isinstance(element, dict):
+                    if element.get("t") == "Str":
+                        para["c"][i] = {"t": underline_strike, "c": [element]}
+                    else:
+                        apply_format_to_para(element, underline_strike)
+                # header
+                elif isinstance(element, list):
+                    print(element)
+                    for i in range(len(element)):
+                        apply_format_to_para(element[i], "Underline")
+        else:
+            para_copy = copy.deepcopy(para)
+            para["t"] = underline_strike
+            para["c"] = [para_copy]
+            print(para)
 
 def delete_for_para(para, strike):
     print("delete_for_para")
     print(para["c"])
     for i, element in enumerate(para["c"]):
         if isinstance(element, dict):
+            print(element)
             if element.get("t") == "Str":
                 para["c"][i] = {"t": strike, "c": [element]}
                 print(para["c"])
-            elif element.get("t") == "Para":
+            else:
+                print("AAAAA")
                 delete_for_para(element, strike)
+        if isinstance(element, list):
+            print(element)
+            for i, value in enumerate(element):
+                if isinstance(value, dict):
+                    value_copy = copy.deepcopy(value)
+                    value["t"] = strike
+                    value["c"] = [value_copy]
     print(para["c"])
     para_copy = copy
 
@@ -109,7 +134,7 @@ def apply_diffs_recursive(diffs, target, current_action, parsed_old_file):
                         if target[position][i]['t'] == "Para":
                             apply_format_to_para(target[position][i], "Underline")
                 else:
-                    if target[position]['t'] == "Para":
+                    if target[position]['t'] != "Str":
                         apply_format_to_para(target[position], "Underline")
 
         elif current_action == "delete":
@@ -132,9 +157,16 @@ def apply_diffs_recursive(diffs, target, current_action, parsed_old_file):
                         if parsed_old_file[delete_position][i]['t'] == "Para":
                             print("bbb")
                             print(parsed_old_file[delete_position][i])
-                            to_insert = delete_for_para(parsed_old_file[delete_position][i], "Strikeout")
+                            to_insert = delete_for_para(parsed_old_file[delete_position][i], "Strikeout") # przecież to nic nie zwraca
                             to_insert = [{"t": "Para", "c": to_insert}]
                             print(f"to_insert {to_insert}")
+                elif parsed_old_file[delete_position]["t"] == "Header":
+                   
+                        print(parsed_old_file[delete_position])
+                        delete_for_para(parsed_old_file[delete_position], "Strikeout")
+                        print(parsed_old_file[delete_position])
+                        to_insert = parsed_old_file[delete_position]
+                        print(f"to_insert {to_insert}")
                 else:
                     to_insert = {"t": "Strikeout", "c": [deleted_copy]}
                 target.insert(delete_position, to_insert)
