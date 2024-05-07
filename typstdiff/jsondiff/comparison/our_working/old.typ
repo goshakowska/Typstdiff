@@ -1,5 +1,6 @@
   GNU nano 6.2                        test1.typ                              
 = Introduction
+
 In this report, we will explore the
 various factors that influence _fluid
 dynamics_ in glaciers and how they
@@ -100,7 +101,6 @@ https://typst.app/
 
 + item
 
-/ Term: description
 
 $x^2$
 
@@ -251,12 +251,6 @@ The y coordinate is #y.
 #lower("ABC") \
 #lower[*My Text*] \
 #lower[already low]
-
-
-```typc
-let f(x) = x
-code = "centered"
-```
 
 "This is in quotes."
 

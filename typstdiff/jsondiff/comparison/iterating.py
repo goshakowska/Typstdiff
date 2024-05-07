@@ -14,42 +14,51 @@ with open('new.json', 'rb') as changed_file:
 
 diffs = diff(parsed_old_file, parsed_changed_file, syntax='explicit', dump=False)
 
-def format_to_para(para, underline_strike):
+def format_paragraph(para, underline_strike):
+    print(f"formating paragraph: {para}")
     if isinstance(para, dict):
-        for i, element in enumerate(para["c"]):
-            if isinstance(element, dict):
-                if element["t"] in ("Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"): # WHITE CHAR
-                    para_copy = copy.deepcopy(element)
-                    para["c"][i]['t'] = underline_strike
-                    para["c"][i]["c"] = [para_copy]
-                elif element["t"] in ("InlineMath", "DefaultStyle", "DefaultDelim", "DisplayMath"): # just skip
-                    print(f"Skippin {element}")
-                else:
-                    if element.get("t") == "Str":
-                        element_copy = copy.deepcopy(element)
-                        para["c"][i] = {"t": underline_strike, "c": [element_copy]}
-                    else:
-                        format_to_para(element, underline_strike)
-            if isinstance(element, list):
-                parse_list(element, underline_strike)
-    # elif isinstance(para, list):
-    #     print(para)
-    #     for i in range(len(para)):
-    #         apply_format_to_para(para[i], "Underline")
+        if "c" in para.keys():
+            parse_list_dict(para["c"], underline_strike)
+        else:
+            parse_list_dict(para, underline_strike)
+    elif isinstance(para, list):
+        parse_list_dict(para, underline_strike)
 
-def parse_list(element, strike):
-    print(f"parsing list{element}")
-    if isinstance(element, list):
-        print(element)
-        for i, value in enumerate(element):
-            print(f"value in list: {value}")
-            if isinstance(value, dict):
-                if value["t"] in ("InlineMath", "DefaultStyle", "DefaultDelim"): # just skip
-                    print(f"Skipping {value}")
-                else:
-                    format_to_para(element[i], strike)
-            if isinstance(value, list):
-                parse_list(element[i], strike)
+
+def parse_dict(dict, underline_strike):
+    print(f"parse_dict: {dict}")
+    if dict["t"] in ("Str", "Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"): # type of char
+        para_copy = copy.deepcopy(dict)
+        dict['t'] = underline_strike
+        dict["c"] = [para_copy]
+    elif dict["t"] in ("InlineMath", "DefaultStyle", "DefaultDelim", "DisplayMath", "Link"): # just skip "DefaultStyle", "DefaultDelim" and the rest as for now
+        print(f"Skipping {dict}")
+    else:
+        format_paragraph(dict, underline_strike)
+
+
+def parse_list_dict(para, underline_strike):
+    print(f"parse_list_dict: {para}")
+    if isinstance(para, list):
+        for i, element in enumerate(para):
+            if isinstance(element, dict):
+                parse_dict(para[i], underline_strike)
+            elif isinstance(element, list):
+                format_paragraph(para[i], underline_strike)
+    else:
+        if isinstance(para, dict):
+            parse_dict(para, underline_strike)
+
+
+def parse_header(target, position):
+    print(f"parsing header {target[position]}")
+    for i in range(len(target[position]["c"])):
+        if isinstance(target[position]["c"][i], list):
+            for k in range(len(target[position]["c"][i])):
+                if isinstance(target[position]["c"][i][k], dict):
+                    target_copy = copy.deepcopy(target[position]["c"][i][k])
+                    target[position]["c"][i][k]['t'] = 'Underline'
+                    target[position]["c"][i][k]['c'] =  [target_copy]
 
 
 def apply_diffs_recursive(diffs, target, current_action, parsed_old_file):
@@ -63,8 +72,6 @@ def apply_diffs_recursive(diffs, target, current_action, parsed_old_file):
                     apply_diffs_recursive(value, target, next_action, parsed_old_file)
                 elif isinstance(value, dict):
                     if isinstance(parsed_old_file, list) and isinstance(key,int):
-                        print(parsed_old_file)
-                        print(key)
                         if len(parsed_old_file) <= key:
                             apply_diffs_recursive(value, target[key], current_action, parsed_old_file)
                         else:
@@ -79,12 +86,7 @@ def apply_diffs_recursive(diffs, target, current_action, parsed_old_file):
                             target[key][i] = v
                 else:
                     # above should also add old version
-                    if key == "c":
-                        target_copy = copy.deepcopy(target)
-                        target['t'] = 'Underline'
-                        target['c'] =  [target_copy]
-                        print(f"target {target}")
-                    elif key == "t":
+                    if key == "c" or key == "t":
                         target_copy = copy.deepcopy(target)
                         target['t'] = 'Underline'
                         target['c'] =  [target_copy]
@@ -97,57 +99,39 @@ def apply_diffs_recursive(diffs, target, current_action, parsed_old_file):
                 position, value = change
                 print(f"target[position] {target[position]}")
 
-                # check if this is para
                 if isinstance(target[position], list):
                     for i in range(len(target[position])):
                         if target[position][i]['t'] in ("Para", "BulletList"):
-                            format_to_para(target[position][i], "Underline")
-                # elif target[position]["t"] == "Header":
-                #         print("asdadad")
-                #         print(target[position])
-                #         print(target[position]["c"][2])
-                #         #for i in range(len(target[position]["c"])):
-                #         apply_format_to_para(target[position], "Underline")
-                #         print(target[position])
+                            format_paragraph(target[position][i], "Underline")
+                elif target[position]["t"] == "Header":
+                        parse_header(target, position)
+                elif target[position]['t'] != "Str":
+                        format_paragraph(target[position], "Underline")
+                elif target[position]['t'] == "Str":
+                    target_copy = copy.deepcopy(target[position])
+                    target[position]= {"t": "Underline", "c": [target_copy]}
 
-                #         # target_copy = copy.deepcopy(target[position])
-                #         # target[position]['t'] = 'Underline'
-                #         # target[position]['c'] =  [target_copy]
-
-                #         #to_insert = {"t": "Underline", "c": [target[position]]}
-                else:
-                    if target[position]['t'] != "Str":
-                        format_to_para(target[position], "Underline")
 
         elif current_action == "delete":
             print("----------DELETE----------")
             diffs.reverse()
             print(f"diffs: {diffs}")
-            print(f"target {target}")
-            print(f"parsed_old_file {parsed_old_file}")
             for delete_position in diffs:
-                print(parsed_old_file[delete_position])
-                print(target[delete_position-1])
-                target_copy = copy.deepcopy(target[delete_position-1])
                 deleted_copy = copy.deepcopy(parsed_old_file[delete_position])
-                print(parsed_old_file[delete_position])
 
                 if isinstance(parsed_old_file[delete_position], list):
                     for i in range(len(parsed_old_file[delete_position])):
                         if parsed_old_file[delete_position][i]['t'] in ("Para", "BulletList"):
-                            format_to_para(parsed_old_file[delete_position][i], "Strikeout")
-                            to_insert = [{"t": "Para", "c": parsed_old_file[delete_position][i]}]
+                            format_paragraph(parsed_old_file[delete_position][i], "Strikeout")
+                            # to_insert = [{"t": "Para", "c": parsed_old_file[delete_position][i]}]
+                            to_insert = [parsed_old_file[delete_position][i]]
 
-                elif parsed_old_file[delete_position]["t"] in ("Para", "BulletList"):
-                        format_to_para(parsed_old_file[delete_position], "Strikeout")
+                elif parsed_old_file[delete_position]["t"] in ("Para", "BulletList", "OrderedList"):
+                        format_paragraph(parsed_old_file[delete_position], "Strikeout")
                         to_insert = parsed_old_file[delete_position]
                 
                 elif parsed_old_file[delete_position]["t"] == "Header":
-                        format_to_para(parsed_old_file[delete_position], "Strikeout")
-                        to_insert = parsed_old_file[delete_position]
-                
-                elif parsed_old_file[delete_position]["t"] == "OrderedList":
-                        format_to_para(parsed_old_file[delete_position], "Strikeout")
+                        parse_header(parsed_old_file, delete_position)
                         to_insert = parsed_old_file[delete_position]
                 else:
                     to_insert = {"t": "Strikeout", "c": [deleted_copy]}
