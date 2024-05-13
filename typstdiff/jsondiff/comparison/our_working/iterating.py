@@ -52,15 +52,35 @@ class Comparison:
                 self.parse_dict(para, underline_strike)
 
 
-    def parse_header(self, target, position):
+    def parse_header(self, target, position, format_action):
         print(f"parsing header {target[position]}")
         for i in range(len(target[position]["c"])):
             if isinstance(target[position]["c"][i], list):
                 for k in range(len(target[position]["c"][i])):
                     if isinstance(target[position]["c"][i][k], dict):
                         target_copy = copy.deepcopy(target[position]["c"][i][k])
-                        target[position]["c"][i][k]['t'] = 'Underline'
+                        target[position]["c"][i][k]['t'] = format_action
                         target[position]["c"][i][k]['c'] =  [target_copy]
+
+
+    def format_changes(self, target, position, format_action, return_insert: bool = False):
+        if isinstance(target[position], list):
+            for i in range(len(target[position])):
+                if target[position][i]['t'] in ("Para", "BulletList"):
+                    self.format_paragraph(target[position][i], format_action)
+                    # if delete then return insert
+                    to_insert = [target[position][i]]
+        elif target[position]["t"] == "Header":
+                self.parse_header(target, position, format_action)
+                to_insert = target[position]
+        elif target[position]['t'] in ("Para", "BulletList", "OrderedList"):
+                self.format_paragraph(target[position], format_action)
+                to_insert = target[position]
+        else:
+            target_copy = copy.deepcopy(target[position])
+            target[position]= {"t": format_action, "c": [target_copy]}
+        if return_insert:
+            return to_insert
 
 
     def apply_diffs_recursive(self, diffs, target, current_action, parsed_old_file):
@@ -100,18 +120,7 @@ class Comparison:
                 for change in diffs:
                     position, value = change
                     print(f"target[position] {target[position]}")
-
-                    if isinstance(target[position], list):
-                        for i in range(len(target[position])):
-                            if target[position][i]['t'] in ("Para", "BulletList"):
-                                self.format_paragraph(target[position][i], "Underline")
-                    elif target[position]["t"] == "Header":
-                            self.parse_header(target, position)
-                    elif target[position]['t'] != "Str":
-                            self.format_paragraph(target[position], "Underline")
-                    elif target[position]['t'] == "Str":
-                        target_copy = copy.deepcopy(target[position])
-                        target[position]= {"t": "Underline", "c": [target_copy]}
+                    self.format_changes(target, position, "Underline")
 
 
             elif current_action == "delete":
@@ -119,25 +128,7 @@ class Comparison:
                 diffs.reverse()
                 print(f"diffs: {diffs}")
                 for delete_position in diffs:
-                    deleted_copy = copy.deepcopy(parsed_old_file[delete_position])
-
-                    if isinstance(parsed_old_file[delete_position], list):
-                        for i in range(len(parsed_old_file[delete_position])):
-                            if parsed_old_file[delete_position][i]['t'] in ("Para", "BulletList"):
-                                self.format_paragraph(parsed_old_file[delete_position][i], "Strikeout")
-                                # to_insert = [{"t": "Para", "c": parsed_old_file[delete_position][i]}]
-                                to_insert = [parsed_old_file[delete_position][i]]
-
-                    elif parsed_old_file[delete_position]["t"] in ("Para", "BulletList", "OrderedList"):
-                            self.format_paragraph(parsed_old_file[delete_position], "Strikeout")
-                            to_insert = parsed_old_file[delete_position]
-                    
-                    elif parsed_old_file[delete_position]["t"] == "Header":
-                            self.parse_header(parsed_old_file, delete_position)
-                            to_insert = parsed_old_file[delete_position]
-                    else:
-                        to_insert = {"t": "Strikeout", "c": [deleted_copy]}
-            
+                    to_insert = self.format_changes(parsed_old_file, delete_position, "Strikeout", True)
                     target.insert(delete_position, to_insert)
                     
         except Exception as e:

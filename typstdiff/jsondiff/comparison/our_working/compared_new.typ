@@ -86,7 +86,7 @@ $- x$#strike[ ];#strike[is];#strike[ ];#strike[the];#strike[
 
 <intro>
 
-= #underline[Heading]
+= #strike[Heading]
 - #strike[item]
 
 + #strike[item]
