@@ -1,3 +1,4 @@
 /poetry.lock
 /tests/__pycache__
 /typstdiff/__pycache__
+/typstdiff/jsondiff/comparison/our_working/__pycache__

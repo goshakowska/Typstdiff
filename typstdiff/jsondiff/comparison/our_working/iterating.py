@@ -1,7 +1,9 @@
 from jsondiff import diff
 from jsondiff.symbols import Symbol
+import subprocess
 import json
 import copy
+from FileConverter import FileConverter
 
 
 class Comparison:
@@ -137,11 +139,20 @@ class Comparison:
             print(f"Parsing error: {e}")
             print(f"Skipping...")
 
-comparison = Comparison("/home/sarek/zprp-typstdiff/typstdiff/jsondiff/comparison/our_working/new.json", "/home/sarek/zprp-typstdiff/typstdiff/jsondiff/comparison/our_working/old.json")
+def main():
+    # later add paths from user arguments
+    file_converter = FileConverter()
+    file_converter.convert_with_pandoc('typst', 'json', 'new.typ', 'new.json')
+    file_converter.convert_with_pandoc('typst', 'json', 'old.typ', 'old.json')
+    comparison = Comparison("new.json", "old.json")
+    comparison.apply_diffs_recursive(comparison.diffs, comparison.parsed_new_file, None, comparison.parsed_old_file)
+    print(comparison.parsed_new_file)
+    file_converter.write_to_json_file(comparison.parsed_new_file, 'compared_new.json')
+    file_converter.convert_with_pandoc('json', 'typst', 'compared_new.json', 'compared_new.typ')
+    # later add user arguments to format text
+    format_lines = [f"#show underline : it => {{highlight(fill: teal,text(red, it))}}", f"#show strike : it => {{highlight(fill: green, text(yellow, it))}}"]
+    file_converter.write_lines(format_lines, 'compared_new.typ')
+    file_converter.compile_to_pdf("compared_new.typ")
 
-comparison.apply_diffs_recursive(comparison.diffs, comparison.parsed_new_file, None, comparison.parsed_old_file)
-
-print(comparison.parsed_new_file)
-
-with open('compared_new.json', 'w') as updated_file:
-    json.dump(comparison.parsed_new_file, updated_file, indent=4)
+if __name__ == "__main__":
+    main()
