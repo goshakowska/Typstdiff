@@ -79,6 +79,7 @@ class Comparison:
         else:
             target_copy = copy.deepcopy(target[position])
             target[position]= {"t": format_action, "c": [target_copy]}
+            to_insert = target[position]
         if return_insert:
             return to_insert
 
@@ -108,10 +109,11 @@ class Comparison:
                                 target[key][i] = v
                     else:
                         # above should also add old version
-                        if key == "c" or key == "t":
-                            target_copy = copy.deepcopy(target)
-                            target['t'] = 'Underline'
-                            target['c'] =  [target_copy]
+                        # if key == "c" or key == "t":
+                        #     target_copy = copy.deepcopy(target)
+                        #     target['t'] = 'Underline'
+                        #     target['c'] =  [target_copy]
+                        continue
 
             elif current_action == "insert":
                 print("----------INSERTING----------")
@@ -135,7 +137,7 @@ class Comparison:
             print(f"Parsing error: {e}")
             print(f"Skipping...")
 
-comparison = Comparison("new.json", "old.json")
+comparison = Comparison("/home/sarek/zprp-typstdiff/typstdiff/jsondiff/comparison/our_working/new.json", "/home/sarek/zprp-typstdiff/typstdiff/jsondiff/comparison/our_working/old.json")
 
 comparison.apply_diffs_recursive(comparison.diffs, comparison.parsed_new_file, None, comparison.parsed_old_file)
 
