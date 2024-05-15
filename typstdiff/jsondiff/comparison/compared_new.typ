@@ -1,158 +1,217 @@
-GNU #underline[CHANGED] 6.2 test1.typ
+#show underline : it => {highlight(fill: teal,text(red, it))}
+#show strike : it => {highlight(fill: green, text(yellow, it))}
+GNU nano 6.2 test1.typ
 
 = Introduction
-In #underline[CHANGED] report, we will explore the various#underline[ \
-];factors that influence #emph[fluid #underline[CHANGED];] in
-#underline[CHANGED] and how #underline[ \
-] #underline[CHANGED] to the formation and behaviour of these natural
-structures.
+#strike[In];#strike[ ];#strike[this];#strike[ ];#strike[report,];#strike[
+];#strike[we];#strike[ ];#strike[will];#strike[
+];#strike[explore];#strike[ ];#strike[the];#strike[
+];#strike[various];#strike[ ];#strike[factors];#strike[
+];#strike[that];#strike[ ];#strike[influence];#strike[
+];#strike[#emph[fluid dynamics];];#strike[ ];#strike[in];#strike[
+];#strike[glaciers];#strike[ ];#strike[and];#strike[
+];#strike[how];#strike[ ];#strike[they];#strike[
+];#strike[contribute];#strike[ ];#strike[to];#strike[
+];#strike[the];#strike[ ];#strike[formation];#strike[
+];#strike[and];#strike[ ];#strike[behaviour];#strike[
+];#strike[of];#strike[ ];#strike[these];#strike[
+];#strike[natural];#strike[ ];#strike[structures.]
 
-+ The #underline[CHANGED]
++ #strike[The];#strike[ ];#strike[climate]
 
-  - Temperature
+  - #strike[Temperature]
 
-  - Precipitation
+  - #strike[Precipitation]
 
-+ The topography
++ #strike[The];#strike[ ];#strike[topography]
 
-+ The geology
++ #strike[The];#strike[ ];#strike[geology]
 
-The equation $Q = h o A v + C$ defines the glacial flow rate.
+#strike[The];#strike[ ];#strike[equation];#strike[
+];$Q = rho A v + C$#strike[ ];#strike[defines];#strike[
+];#strike[the];#strike[ ];#strike[glacial];#strike[
+];#strike[flow];#strike[ ];#strike[rate.]
 
-The flow rate of a glacier is defined by the following equation:
+#strike[The];#strike[ ];#strike[flow];#strike[ ];#strike[rate];#strike[
+];#strike[of];#strike[ ];#strike[a];#strike[ ];#strike[glacier];#strike[
+];#strike[is];#strike[ ];#strike[defined];#strike[ ];#strike[by];#strike[
+];#strike[the];#strike[ ];#strike[following];#strike[
+];#strike[equation:]
 
-$ Q = h o A v + C $
+$ Q = rho A v + C $
 
-The flow rate of a glacier is given by the following equation:
+#strike[The];#strike[ ];#strike[flow];#strike[ ];#strike[rate];#strike[
+];#strike[of];#strike[ ];#strike[a];#strike[ ];#strike[glacier];#strike[
+];#strike[is];#strike[ ];#strike[given];#strike[ ];#strike[by];#strike[
+];#strike[the];#strike[ ];#strike[following];#strike[
+];#strike[equation:]
 
-$ Q = h o A v + e x t t i m e o f f s e t $
+$ Q = rho A v + upright(" time offset ") $
 
-Total displaced soil by glacial flow:
+#strike[Total];#strike[ ];#strike[displaced];#strike[
+];#strike[soil];#strike[ ];#strike[by];#strike[
+];#strike[glacial];#strike[ ];#strike[flow:]
 
-Total displaced soil by glacial flow:
+#underline[$ 7.32 beta + sum_(i = 0)^nabla Q_i / 2 $]
 
-$ a i g h t s q u i g a r r o w b $
+#strike[Total];#strike[ ];#strike[displaced];#strike[
+];#strike[soil];#strike[ ];#strike[by];#strike[
+];#strike[glacial];#strike[ ];#strike[flow:]
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+$ 7.32 beta + sum_(i = 0)^nabla frac(Q_i (a_i - epsilon), 2) $
 
-Number: 3
+$ v colon.eq vec(x_1, x_2, x_3) $
 
-$- x$ is the opposite #underline[CHANGED] $x$
+$ a arrow.r.squiggly b $
 
-let #underline[#underline[#underline[#strong[name];];];] =
-\[#strong[Typst!];\]
+#strike[Lorem];#strike[ ];#strike[ipsum];#strike[
+];#strike[dolor];#strike[ ];#strike[sit];#strike[
+];#strike[amet,];#strike[ ];#strike[consectetur];#strike[
+];#strike[adipiscing];#strike[ ];#strike[elit,];#strike[
+];#strike[sed];#strike[ ];#strike[do]
 
-#strong[strong]
+#strike[Number:];#strike[ ];#strike[3]
 
-#emph[emphasis]
+$- x$#strike[ ];#strike[is];#strike[ ];#strike[the];#strike[
+];#strike[opposite];#strike[ ];#strike[of];#strike[ ];$x$
 
-`print(1)`
+#strike[let];#strike[ ];#strike[name];#strike[ ];#strike[\=];#strike[
+];#strike[\[];#strike[#strong[Typst!];];#strike[\]]
+
+#strike[#strong[strong];]
+
+#strike[#emph[emphasis];]
+
+#strike[`print(1)`]
 
 #link("https://typst.app/")
 
 <intro>
 
-= Heading
-- item
+= #strike[Heading]
+- #strike[item]
 
-+ item
++ #strike[item]
 
-/ Term: #block[
-description
-]
+$x^2$
 
-$c h a n g e d^2$
+#strike[‘single”];#strike[ ];#strike[or];#strike[ ];#strike[“double”]
 
-‘single” or “double”
-
-~, —
+#strike[~,];#strike[ ];#strike[—]
 
 $x^2$
 
 $ x^2 $
 
-$c h a n g e d_1$
+$x_1$
 
 $x^2$
 
-$1 + r a c a + b 5$
+$1 + frac(a + b, 5)$
+
+$x\
+y$
+
+$x & = 2\
+ & = 3$
 
 $pi$
 
-$arrow.r$ \
-$x y$
+$arrow.r$#strike[ \
+];$x y$
 
-$i g h t a r r o w , e q$
+$arrow.r , eq.not$
 
-$a e x t i s n a t u r a l$
+$a upright(" is natural")$
 
-$⌊x i g h t f l o o r$
+$⌊x⌋$
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-veniam, quis nostrud exercitation ullamco laboris nisi
+#strike[Lorem];#strike[ ];#strike[ipsum];#strike[
+];#strike[dolor];#strike[ ];#strike[sit];#strike[
+];#strike[amet,];#strike[ ];#strike[consectetur];#strike[
+];#strike[adipiscing];#strike[ ];#strike[elit,];#strike[
+];#strike[sed];#strike[ ];#strike[do];#strike[ ];#strike[eiusmod];#strike[
+];#strike[tempor];#strike[ ];#strike[incididunt];#strike[
+];#strike[ut];#strike[ ];#strike[labore];#strike[ ];#strike[et];#strike[
+];#strike[dolore];#strike[ ];#strike[magna];#strike[
+];#strike[aliqua.];#strike[ ];#strike[Ut];#strike[
+];#strike[enim];#strike[ ];#strike[ad];#strike[ ];#strike[minim];#strike[
+];#strike[veniam,];#strike[ ];#strike[quis];#strike[
+];#strike[nostrud];#strike[ ];#strike[exercitation];#strike[
+];#strike[ullamco];#strike[ ];#strike[laboris];#strike[ ];#strike[nisi]
 
-#emph[Hello] \
-5
+#strike[#emph[Hello];];#strike[ \
+];#strike[5]
 
-hello from the #strong[world]
+#strike[hello];#strike[ ];#strike[from];#strike[ ];#strike[the];#strike[
+];#strike[#strong[world];]
 
-This is Typst‘s documentation. It explains Typst.
+#strike[This];#strike[ ];#strike[is];#strike[ ];#strike[Typst‘s];#strike[
+];#strike[documentation.];#strike[ ];#strike[It];#strike[
+];#strike[explains];#strike[ ];#strike[Typst.]
 
-Sum is 5.
+#strike[Sum];#strike[ ];#strike[is];#strike[ ];#strike[5.]
 
-The coordinates are 1, 2.
+#strike[The];#strike[ ];#strike[coordinates];#strike[
+];#strike[are];#strike[ ];#strike[1,];#strike[ ];#strike[2.]
 
-The first element is 1. The last element is 4.
+#strike[The];#strike[ ];#strike[first];#strike[
+];#strike[element];#strike[ ];#strike[is];#strike[ ];#strike[1.];#strike[
+];#strike[The];#strike[ ];#strike[last];#strike[
+];#strike[element];#strike[ ];#strike[is];#strike[ ];#strike[4.]
 
-Austen wrote Persuasion.
+#strike[Austen];#strike[ ];#strike[wrote];#strike[ ];#strike[Persuasion.]
 
-Homer wrote The Odyssey.
+#strike[Homer];#strike[ ];#strike[wrote];#strike[ ];#strike[The];#strike[
+];#strike[Odyssey.]
 
-The y coordinate is 2.
+#strike[The];#strike[ ];#strike[y];#strike[ ];#strike[coordinate];#strike[
+];#strike[is];#strike[ ];#strike[2.]
 
-(5, 6, 11)
+#strike[(5,];#strike[ ];#strike[6,];#strike[ ];#strike[11)]
 
-This is shown
+#strike[This];#strike[ ];#strike[is];#strike[ ];#strike[shown]
 
-abc
+#strike[abc]
 
-Hello \
-Heading \
-3 is the same as 3
+#strike[Hello];#strike[ \
+];#strike[Heading];#strike[ \
+];#strike[3];#strike[ ];#strike[is];#strike[ ];#strike[the];#strike[
+];#strike[same];#strike[ ];#strike[as];#strike[ ];#strike[3]
 
-4 \
-3 \
-a — b — c
+#strike[4];#strike[ \
+];#strike[3];#strike[ \
+];#strike[a];#strike[ ];#strike[—];#strike[ ];#strike[b];#strike[
+];#strike[—];#strike[ ];#strike[c]
 
-Dobrze
+#strike[Dobrze]
 
-#strong[Date:] 26.12.2022 \
-#strong[Topic:] Infrastructure Test \
-#strong[Severity:] High \
-abc \
-#strong[my text] \
-already low
+#strike[#strong[Date:];];#strike[ ];#strike[26.12.2022];#strike[ \
+];#strike[#strong[Topic:];];#strike[ ];#strike[Infrastructure];#strike[
+];#strike[Test];#strike[ \
+];#strike[#strong[Severity:];];#strike[ ];#strike[High];#strike[ \
+];#strike[abc];#strike[ \
+];#strike[#strong[my text];];#strike[ \
+];#strike[already];#strike[ ];#strike[low]
 
-```typc
-let f(x) = x
-code = "centered"
-```
+#strike[“This];#strike[ ];#strike[is];#strike[ ];#strike[in];#strike[
+];#strike[quotes.”]
 
-“This is in quotes.”
+#strike[“Das];#strike[ ];#strike[ist];#strike[ ];#strike[in];#strike[
+];#strike[Anführungszeichen.”]
 
-“Das ist in Anführungszeichen.”
+#strike[“C’est];#strike[ ];#strike[entre];#strike[
+];#strike[guillemets.”]
 
-“C’est entre guillemets.”
+#strike[1];#strike[#super[st];];#strike[ ];#strike[try!]
 
-1#super[st] try!
+#strike[Italic];#strike[ ];#strike[Oblique]
 
-Italic Oblique
+#strike[This];#strike[ ];#strike[is];#strike[
+];#underline[#strike[important];];#strike[.]
 
-This is #underline[important];.
+#strike[Take];#strike[ ];#underline[#strike[care];]
 
-Take #underline[care]
-
-ABC \
-#strong[MY TEXT] \
-ALREADY HIGH
+#strike[ABC];#strike[ \
+];#strike[#strong[MY TEXT];];#strike[ \
+];#strike[ALREADY];#strike[ ];#strike[HIGH]

@@ -1,68 +1,115 @@
-GNU nano 6.2 test1.typ
-
+  GNU nano 6.2                        test1.typ                              
 = Introduction
-In this report, we will explore the various factors that influence
-#emph[fluid dynamics] in glaciers and how they contribute to the
-formation and behaviour of these natural structures.
+
+In this report, we will explore the
+various factors that influence _fluid
+dynamics_ in glaciers and how they
+contribute to the formation and
+behaviour of these natural structures.
 
 + The climate
-
   - Temperature
-
   - Precipitation
-
 + The topography
-
 + The geology
 
-The equation $Q = h o A v + C$ defines the glacial flow rate.
+// Obrazek z podpisem zapisane w figurze działa
+// #figure(
+//   image("doggo.jpg", width: 70%),
+//   caption: [
+//     _Dog_ form an important part
+//     of the earth's climate system.
+//   ],
+// )
 
-The flow rate of a glacier is defined by the following equation:
+The equation $Q = rho A v + C$
+defines the glacial flow rate.
 
-$ Q = h o A v + C $
+The flow rate of a glacier is
+defined by the following equation:
 
-The flow rate of a glacier is given by the following equation:
+$ Q = rho A v + C $
 
-$ Q = h o A v + e x t t i m e o f f s e t $
+The flow rate of a glacier is given
+by the following equation:
+
+$ Q = rho A v + "time offset" $
 
 Total displaced soil by glacial flow:
 
+#underline($ 7.32 beta +
+  sum_(i=0)^nabla Q_i / 2 $)
+
 Total displaced soil by glacial flow:
 
-$ a i g h t s q u i g a r r o w b $
+$ 7.32 beta +
+  sum_(i=0)^nabla
+    (Q_i (a_i - epsilon)) / 2 $
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+    
+$ v := vec(x_1, x_2, x_3) $
 
-Number: 3
+$ a arrow.squiggly b $
 
-$- x$ is the opposite of $x$
+#lorem(10)
 
-let name = \[#strong[Typst!];\]
 
-#strong[strong]
+// Działa, ale po konwersji przed i po logo+słowo jest nowa linia
 
-#emph[emphasis]
+// #show "ArtosFlow": name => box[
+//   #box(image(
+//     // "logo.svg",
+//     height: 0.7em,
+//   ))
+//   #name
+// ]
+
+// This report is embedded in the
+// ArtosFlow project. ArtosFlow is a
+// project of the Artos Institute.
+
+
+
+
+
+/* SYNTAX */
+
+
+/* MODES */
+Number: #(1 + 2)
+
+$-x$ is the opposite of $x$
+
+let name = [*Typst!*]
+
+
+/* MARKUP */
+
+*strong*
+
+_emphasis_
 
 `print(1)`
 
-#link("https://typst.app/")
+https://typst.app/
 
 <intro>
 
 = Heading
+
 - item
 
 + item
 
-/ Term: #block[
-description
-]
 
 $x^2$
 
-‘single” or “double”
+'single' or "double"
 
-~, —
+~, ---
+
+
+/* MATH MODE */
 
 $x^2$
 
@@ -72,84 +119,161 @@ $x_1$
 
 $x^2$
 
-$1 + r a c a + b 5$
+$1 + (a+b)/5$
+
+$x \ y$
+
+$x &= 2 \ &= 3$
 
 $pi$
 
-$arrow.r$ \
+$arrow.r.long$\
+
 $x y$
 
-$i g h t a r r o w , e q$
+$->, !=$
 
-$a e x t i s n a t u r a l$
+$a "is natural"$
 
-$⌊x i g h t f l o o r$
+$floor(x)$
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-veniam, quis nostrud exercitation ullamco laboris nisi
 
+
+
+#lorem(30)
+
+
+/* SCRIPTING */
 #emph[Hello] \
-5
+#"hello".len()
 
-hello from the #strong[world]
+// proste zmienne w bloku
+#{
+  let a = [from]
+  let b = [*world*]
+  [hello ]
+  a + [ the ] + b
+}
 
-This is Typst‘s documentation. It explains Typst.
+// zmienne i funkcje
+#let name = "Typst"
+This is #name's documentation.
+It explains #name.
 
-Sum is 5.
+#let add(x, y) = x + y
+Sum is #add(2, 3).
 
-The coordinates are 1, 2.
 
-The first element is 1. The last element is 4.
+// krotki, listy, słowniki
+#let (x, y) = (1, 2)
+The coordinates are #x, #y.
 
-Austen wrote Persuasion.
+#let (a, .., b) = (1, 2, 3, 4)
+The first element is #a.
+The last element is #b.
 
-Homer wrote The Odyssey.
+#let books = (
+  Shakespeare: "Hamlet",
+  Homer: "The Odyssey",
+  Austen: "Persuasion",
+)
 
-The y coordinate is 2.
+#let (Austen,) = books
+Austen wrote #Austen.
 
-(5, 6, 11)
+#let (Homer: h) = books
+Homer wrote #h.
 
-This is shown
+// zmienne _
+#let (_, y, _) = (1, 2, 3)
+The y coordinate is #y.
 
-abc
+// zip zmiennych i wywołanie funkcji na wartościach
+// dobrze formatuje, ale typst automatycznie dodaje kolor, więc trochę działa i trochę nie
+#let left = (2, 4, 5)
+#let right = (3, 2, 6)
+#left.zip(right).map(
+  ((a,b)) => a + b
+)
 
-Hello \
-Heading \
-3 is the same as 3
+// instrukcje warunkowe
+#if 1 < 2 [
+  This is shown
+] else [
+  This is not.
+]
 
-4 \
-3 \
-a — b — c
+// pętla for z break (dobrze formatuje jedynie litery jak w przykładzie)
+// dłuższy tekst - dodaje nową linię
+// liczby - nie zachowuje kolorowania typsta
+#for letter in "abc nope" {
+  if letter == " " {
+    break
+  }
 
-Dobrze
+  letter
+}
 
-#strong[Date:] 26.12.2022 \
-#strong[Topic:] Infrastructure Test \
-#strong[Severity:] High \
-abc \
-#strong[my text] \
-already low
+// słowniki i body zmiennej działa
+#let dict = (greet: "Hello")
+#dict.greet \
 
-```typc
-let f(x) = x
-code = "centered"
-```
+#let it = [= Heading]
+#it.body \
 
-“This is in quotes.”
+// metody na tekście
+3 is the same as
+#"abc".len()
 
-“Das ist in Anführungszeichen.”
+// metody na konkretnych zmiennych
+#let array = (1, 2, 3, 4)
+#array.pop() \
+#array.len() \
 
-“C’est entre guillemets.”
+#("a, b, c"
+    .split(", ")
+    .join[ --- ])
+
+
+// Wszystkie operatory działają
+#if 3 in (1, 2, 3) [
+        Dobrze 
+] else [
+        Niedobrze  
+]
+
+
+
+*Date:* 26.12.2022 \
+*Topic:* Infrastructure Test \
+*Severity:* High \
+
+#lower("ABC") \
+#lower[*My Text*] \
+#lower[already low]
+
+"This is in quotes."
+
+#set text(lang: "de")
+"Das ist in Anführungszeichen."
+
+#set text(lang: "fr")
+"C'est entre guillemets."
 
 1#super[st] try!
 
-Italic Oblique
+#text(font: "Linux Libertine", style: "italic")[Italic]
+#text(font: "DejaVu Sans", style: "oblique")[Oblique]
 
-This is #underline[important];.
 
-Take #underline[care]
+This is #underline[important].
 
-ABC \
-#strong[MY TEXT] \
-ALREADY HIGH
+Take #underline(
+  stroke: 1.5pt + red,
+  offset: 2pt,
+  [care],
+)
+
+#upper("abc") \
+#upper[*my text*] \
+#upper[ALREADY HIGH]
