@@ -1,6 +1,5 @@
 from jsondiff import diff
 from jsondiff.symbols import Symbol
-import subprocess
 import json
 import copy
 from FileConverter import FileConverter
@@ -18,6 +17,18 @@ class Comparison:
             parsed_file = json.load(file)
         return parsed_file
 
+
+    # def decorator_format_para(self, para, underlin_strike):
+    #     def decorator(func):
+    #         def wrapper(v_dict, v_underline_strike):
+    #             print(f"formating paragraph: {para}")
+    #             if isinstance(para, dict):
+    #                 if 'c' in para.keys():
+    #                     func(v_dict["c"], v_underline_strike)
+    #                 else:
+    #                     func(v_dict, v_underline_strike)
+                
+
     def format_paragraph(self, para, underline_strike):
         print(f"formating paragraph: {para}")
         if isinstance(para, dict):
@@ -31,7 +42,7 @@ class Comparison:
 
     def parse_dict(self, dict, underline_strike):
         print(f"parse_dict: {dict}")
-        if dict["t"] in ("Str", "Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"): # type of char
+        if dict["t"] in ("Math", "Str", "Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"): # type of char
             para_copy = copy.deepcopy(dict)
             dict['t'] = underline_strike
             dict["c"] = [para_copy]
