@@ -1,6 +1,6 @@
 from jsondiff import diff
 from jsondiff.symbols import Symbol
-import subprocess
+
 import json
 import copy
 from FileConverter import FileConverter
@@ -18,29 +18,34 @@ class Comparison:
             parsed_file = json.load(file)
         return parsed_file
 
-    def format_paragraph(self, para, underline_strike):
-        print(f"formating paragraph: {para}")
-        if isinstance(para, dict):
-            if "c" in para.keys():
-                self.parse_list_dict(para["c"], underline_strike)
+    def decorator_format_para(func):
+        def wrapper(self, para, underline_strike):
+            print(f"Applying decorator to paragraph: {para}")
+            if isinstance(para, dict):
+                if "c" in para.keys():
+                    return func(self, para["c"], underline_strike)
+                else:
+                    return func(self, para, underline_strike)
+            elif isinstance(para, list):
+                return func(self, para, underline_strike)
             else:
-                self.parse_list_dict(para, underline_strike)
-        elif isinstance(para, list):
-            self.parse_list_dict(para, underline_strike)
+                print(f"Unsupported type for para: {type(para)}")
+                return None
+        return wrapper
 
 
     def parse_dict(self, dict, underline_strike):
         print(f"parse_dict: {dict}")
-        if dict["t"] in ("Str", "Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"): # type of char
+        if dict["t"] in ("Link", "Math", "Str", "Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"): # type of char
             para_copy = copy.deepcopy(dict)
             dict['t'] = underline_strike
             dict["c"] = [para_copy]
-        elif dict["t"] in ("InlineMath", "DefaultStyle", "DefaultDelim", "DisplayMath", "Link"): # just skip "DefaultStyle", "DefaultDelim" and the rest as for now
+        elif dict["t"] in ("InlineMath", "DefaultStyle", "DefaultDelim", "DisplayMath"): # just skip "DefaultStyle", "DefaultDelim" and the rest as for now
             print(f"Skipping {dict}")
         else:
-            self.format_paragraph(dict, underline_strike)
+            self.parse_list_dict(dict, underline_strike)
 
-
+    @decorator_format_para
     def parse_list_dict(self, para, underline_strike):
         print(f"parse_list_dict: {para}")
         if isinstance(para, list):
@@ -48,7 +53,7 @@ class Comparison:
                 if isinstance(element, dict):
                     self.parse_dict(para[i], underline_strike)
                 elif isinstance(element, list):
-                    self.format_paragraph(para[i], underline_strike)
+                    self.parse_list_dict(para[i], underline_strike)
         else:
             if isinstance(para, dict):
                 self.parse_dict(para, underline_strike)
@@ -69,14 +74,14 @@ class Comparison:
         if isinstance(target[position], list):
             for i in range(len(target[position])):
                 if target[position][i]['t'] in ("Para", "BulletList"):
-                    self.format_paragraph(target[position][i], format_action)
+                    self.parse_list_dict(target[position][i], format_action)
                     # if delete then return insert
                     to_insert = [target[position][i]]
         elif target[position]["t"] == "Header":
                 self.parse_header(target, position, format_action)
                 to_insert = target[position]
         elif target[position]['t'] in ("Para", "BulletList", "OrderedList"):
-                self.format_paragraph(target[position], format_action)
+                self.parse_list_dict(target[position], format_action)
                 to_insert = target[position]
         else:
             target_copy = copy.deepcopy(target[position])
