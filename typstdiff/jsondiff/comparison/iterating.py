@@ -80,7 +80,7 @@ class Comparison:
         elif target[position]["t"] == "Header":
                 self.parse_header(target, position, format_action)
                 to_insert = target[position]
-        elif target[position]['t'] in ("Para", "BulletList", "OrderedList"):
+        elif target[position]['t'] in ("Para", "BulletList", "OrderedList", "Div", "CodeBlock"):
                 self.parse_list_dict(target[position], format_action)
                 to_insert = target[position]
         else:
@@ -153,6 +153,7 @@ def main():
     comparison.apply_diffs_recursive(comparison.diffs, comparison.parsed_new_file, None, comparison.parsed_old_file)
     print(comparison.parsed_new_file)
     file_converter.write_to_json_file(comparison.parsed_new_file, 'compared_new.json')
+    print("zapisało")
     file_converter.convert_with_pandoc('json', 'typst', 'compared_new.json', 'compared_new.typ')
     # later add user arguments to format text
     format_lines = [f"#show underline : it => {{highlight(fill: teal,text(red, it))}}", f"#show strike : it => {{highlight(fill: green, text(yellow, it))}}"]
