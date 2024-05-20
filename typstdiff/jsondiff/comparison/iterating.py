@@ -3,30 +3,44 @@ from jsondiff.symbols import Symbol
 
 import json
 import copy
-from FileConverter import FileConverter
+from typstdiff.jsondiff.comparison.file_converter import FileConverter
 
 
 class Comparison:
+
     def __init__(self, new_path, old_path):
         self.parsed_new_file = self.parse_load_file(new_path)
         self.parsed_old_file = self.parse_load_file(old_path)
         self.parsed_changed_file = self.parse_load_file(new_path)
         self.diffs = diff(self.parsed_old_file, self.parsed_changed_file, syntax='explicit', dump=False)
 
+        self.PARAGRAPH_TYPES = {
+            dict: lambda para : para["c"] if "c" in para.keys() else para,
+            list: lambda para: para
+            }
+        
+        self.PARSERS_TYPES = {
+            dict: lambda a : a,
+            list: lambda a : a
+        }
+        
+        self.DICT_TYPES = {
+            "Link", "Math", "Str", "Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"
+        }
+
     def parse_load_file(self, path):
-        with open(path, 'rb') as file:
-            parsed_file = json.load(file)
-        return parsed_file
+        try:
+            with open(path, 'rb') as file:
+                return json.load(file)
+        except:
+            pass
 
     def decorator_format_para(func):
         def wrapper(self, para, underline_strike):
             print(f"Applying decorator to paragraph: {para}")
-            if isinstance(para, dict):
-                if "c" in para.keys():
-                    return func(self, para["c"], underline_strike)
-                else:
-                    return func(self, para, underline_strike)
-            elif isinstance(para, list):
+            para_type = type(para)
+            if para_type in self.PARAGRAPH_TYPES:
+                para = self.PARAGRAPH_TYPES[para_type](para)
                 return func(self, para, underline_strike)
             else:
                 print(f"Unsupported type for para: {type(para)}")

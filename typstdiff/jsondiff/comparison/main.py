@@ -2,8 +2,8 @@ import sys
 import argparse
 import os
 
-from FileConverter import FileConverter
-from iterating import Comparison
+from typstdiff.jsondiff.comparison.file_converter import FileConverter
+from typstdiff.jsondiff.comparison.iterating import Comparison
 
 # Define the possible customizations
 
@@ -28,6 +28,7 @@ typst_predefined_colors = {
     ('li', 'lime', '#01ff70'): 'lime'
 }
 
+
 def isValidHexaCode(hex_string):
     """
     Check if a given string is a valid hexadecimal color code.
@@ -40,6 +41,7 @@ def isValidHexaCode(hex_string):
         return True
     return False
 
+
 def parse_color_param(provided_color):
     """
     Parses a provided color parameter and returns the corresponding color value.
@@ -51,11 +53,12 @@ def parse_color_param(provided_color):
     for key_tuple in typst_predefined_colors:
         if provided_color in key_tuple:
             return typst_predefined_colors[key_tuple]
-    
+
     if isValidHexaCode(provided_color):
         return provided_color
 
     return None
+
 
 def format_styles(custom_setting):
     """
@@ -84,6 +87,7 @@ def format_styles(custom_setting):
 
     return format_lines
 
+
 def check_if_typst_extension(filename):
     """
     Check if the given filename has a .typ extension and if it exists.
@@ -99,6 +103,7 @@ def check_if_typst_extension(filename):
     if not os.path.isfile(filename):
         raise argparse.ArgumentTypeError(f"File '{filename}' does not exist")
     return True
+
 
 def get_file_name_without_extension(filename):
     """
@@ -134,7 +139,7 @@ def main(arguments):
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-ins', '--only-inserted', help="Only show inserted changes to new Typst file", action='store_true')
     group.add_argument('-del', '--only-deleted', help="Only show deleted changes to new Typst file", action='store_true')
-    
+
     parser.add_argument('-ih', '--insert-highlight', help="Set custom highlight to inserted changes", type=str, default='')
     parser.add_argument('-if', '--insert-font', help="Set custom font to inserted changes", type=str, default='')
     parser.add_argument('-dh', '--delete-highlight', help="Set custom highlight to deleted changes", type=str, default='')
@@ -144,7 +149,6 @@ def main(arguments):
 
     for arg_name in ['old_version', 'new_version', 'diff_output_file']:
             setattr(args, arg_name, get_file_name_without_extension(getattr(args, arg_name)))
-
 
     if args.only_inserted and (args.delete_highlight or args.delete_font):
         print("Can't use --only-inserted functionality and customize --delete-highlight or --delete-font simultaneously.")
@@ -165,7 +169,6 @@ def main(arguments):
     if args.only_deleted:
         comparison.show_only_deleted()
 
-
     comparison.apply_diffs_recursive(comparison.diffs, comparison.parsed_new_file, None, comparison.parsed_old_file)
     print(comparison.parsed_new_file)
     file_converter.write_to_json_file(comparison.parsed_new_file, f'{args.diff_output_file}.json')
@@ -173,8 +176,6 @@ def main(arguments):
     file_converter.write_lines(format_lines, f'{args.diff_output_file}.typ')
     file_converter.compile_to_pdf(f'{args.diff_output_file}.typ')
 
+
 if __name__ == "__main__":
     main(sys.argv)
-
-
-
