@@ -96,13 +96,18 @@ class Comparison:
             for to_add, (key, value) in enumerate(diffs.items()):
                 new_diffs[(key, key+to_add)] = value
             diffs = new_diffs
+        if isinstance(index, tuple):
+            index_update = index[1]
+            index = index[0]
+        else:
+            index_update = index
         for key, value in diffs.items():
             print(key, value)
-            if isinstance(value, list) and not isinstance(list(value[0].values())[0], dict) or not isinstance(list(value.values())[0], dict):
-                target_copy = copy.deepcopy(target[index[1]])
-                old_target_copy = copy.deepcopy(old_target[index[0]])
-                target[index[1]] = {"t": "Strikeout", "c": [old_target_copy]}
-                target.insert(index[1]+1, {"t": "Underline", "c": [target_copy]})
+            if isinstance(value, list) and isinstance(value[0], dict) and not isinstance(list(value[0].values())[0], dict) or not isinstance(list(value.values())[0], dict):
+                target_copy = copy.deepcopy(target[index_update])
+                old_target_copy = copy.deepcopy(old_target[index])
+                target[index_update] = {"t": "Strikeout", "c": [old_target_copy]}
+                target.insert(index_update+1, {"t": "Underline", "c": [target_copy]})
             elif isinstance(key, Symbol):
                 if key.label == 'update' and isinstance(list(value.values())[0], dict):
                     self.update(value, target, old_target, index)
@@ -160,7 +165,8 @@ class Comparison:
                     print(f"target[position] {target[position]}")
                     to_insert = self.format_changes(target, position, "Underline")
                     print(f"INSERT {to_insert}")
-                    parsed_old_file.insert(position, to_insert["c"][0])
+                    if to_insert:
+                        parsed_old_file.insert(position, to_insert["c"][0])
 
 
             elif current_action == "delete":
@@ -170,6 +176,7 @@ class Comparison:
                 for delete_position in diffs:
 
                     to_insert = self.format_changes(parsed_old_file, delete_position, "Strikeout")
+                    print(parsed_old_file)
                     print(f"INSERT {to_insert['c'][0]}")
                     target.insert(delete_position, to_insert)
                     parsed_new_file.insert(delete_position, to_insert['c'][0])
