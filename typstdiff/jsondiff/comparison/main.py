@@ -147,7 +147,8 @@ def main(arguments):
 
     args = parser.parse_args(arguments[1:])
 
-    for arg_name in ['old_version', 'new_version', 'diff_output_file']:
+    for arg_name in ['old_version', 'new_version']:
+            check_if_typst_extension(getattr(args, arg_name))
             setattr(args, arg_name, get_file_name_without_extension(getattr(args, arg_name)))
 
     if args.only_inserted and (args.delete_highlight or args.delete_font):
