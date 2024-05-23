@@ -87,7 +87,8 @@ class Comparison:
             target_copy = copy.deepcopy(target[position])
             target[position]= {"t": format_action, "c": [target_copy]}
             to_insert = target[position]
-            return to_insert
+            print(target, position, to_insert, format_action)
+        return to_insert
         
     def update(self, diffs, target, old_target, index):
         print(f"UPDATE {diffs} {index}")
@@ -119,6 +120,7 @@ class Comparison:
         if self.diffs:
             self.apply_diffs_recursive(self.diffs, self.parsed_changed_file, None, self.parsed_old_file, self.parsed_new_file)
         self.diffs = diff(self.parsed_old_file, self.parsed_new_file, syntax='explicit', dump=False)
+        print(f"NEW DIFFS: {self.diffs}")
         if self.diffs:
             key = None
             while not isinstance(key, int):
@@ -165,8 +167,14 @@ class Comparison:
                     print(f"target[position] {target[position]}")
                     to_insert = self.format_changes(target, position, "Underline")
                     print(f"INSERT {to_insert}")
-                    if to_insert:
-                        parsed_old_file.insert(position, to_insert["c"][0])
+                    parsed_old_file.insert(position, to_insert["c"])
+                    # if isinstance(to_insert, list):
+                    #     elements_inserted = self.find_changed_elements(to_insert, "Underline", target)
+                    # else:
+                    #     elements_inserted = [to_insert]
+                    # for element in elements_inserted:
+                    #     print(f"ELEMENT: {element}")
+                    #     parsed_old_file.insert(position, element["c"])
 
 
             elif current_action == "delete":
@@ -174,14 +182,32 @@ class Comparison:
                 diffs.reverse()
                 print(f"diffs: {diffs}")
                 for delete_position in diffs:
-
                     to_insert = self.format_changes(parsed_old_file, delete_position, "Strikeout")
                     print(parsed_old_file)
-                    print(f"INSERT {to_insert['c'][0]}")
+                    print(f"INSERT {to_insert}")
                     target.insert(delete_position, to_insert)
                     parsed_new_file.insert(delete_position, to_insert['c'][0])
                     parsed_old_file[delete_position] = to_insert['c'][0]
-                    
+                    # elements_deleted = self.find_changed_elements(to_insert, "Underline", target)
+                    # for element in elements_deleted:
+                    #     print(f"ELEMENT: {element}")
+                    #     target.insert(delete_position, element)
+                    #     parsed_new_file.insert(delete_position, element['c'][0])
+                    #     parsed_old_file[delete_position] = element['c'][0]
+    
+    def find_changed_elements(self, element, formatting, target):
+        if isinstance(element, dict):
+                if element.get('t') == formatting:
+                    target = element
+                if 'c' in element:
+                    for child in element['c']:
+                        self.find_changed_elements(child, formatting, target['c'])
+        elif isinstance(element, list):
+            for i, item in enumerate(element):
+                self.find_changed_elements(item, formatting, target[i])
+
+
+
         # except Exception as e:
         #     print(f"Parsing error: {e}")
         #     print(f"Skipping...")
