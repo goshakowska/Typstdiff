@@ -36,11 +36,11 @@ class Comparison:
 
     def parse_dict(self, dict, underline_strike):
         print(f"parse_dict: {dict}")
-        if dict["t"] in ("Link", "Math", "Str", "Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak"): # type of char
+        if dict["t"] in ("Link", "Math", "Str", "Emph", "Strong", "Superscript", "Subscript", "SmallCaps", "Quoted", "Cite", "Code", "Space", "SoftBreak", "LineBreak", "InlineMath"): # type of char
             para_copy = copy.deepcopy(dict)
             dict['t'] = underline_strike
             dict["c"] = [para_copy]
-        elif dict["t"] in ("InlineMath", "DefaultStyle", "DefaultDelim", "DisplayMath"): # just skip "DefaultStyle", "DefaultDelim" and the rest as for now
+        elif dict["t"] in ("DefaultStyle", "DefaultDelim", "DisplayMath"): # just skip "DefaultStyle", "DefaultDelim" and the rest as for now
             print(f"Skipping {dict}")
         else:
             self.parse_list_dict(dict, underline_strike)
@@ -71,6 +71,7 @@ class Comparison:
 
 
     def format_changes(self, target, position, format_action):
+        print(target)
         if isinstance(target[position], list):
             for i in range(len(target[position])):
                 if target[position][i]['t'] in ("Para", "BulletList"):
@@ -104,7 +105,7 @@ class Comparison:
             index_update = index
         for key, value in diffs.items():
             print(key, value)
-            if isinstance(value, list) and isinstance(value[0], dict) and not isinstance(list(value[0].values())[0], dict) or not isinstance(list(value.values())[0], dict):
+            if (isinstance(value, list) and isinstance(value[0], dict) and not isinstance(list(value[0].values())[0], dict)) or (isinstance(value, dict) and not isinstance(list(value.values())[0], dict)):
                 target_copy = copy.deepcopy(target[index_update])
                 old_target_copy = copy.deepcopy(old_target[index])
                 target[index_update] = {"t": "Strikeout", "c": [old_target_copy]}
@@ -113,7 +114,9 @@ class Comparison:
                 if key.label == 'update' and isinstance(list(value.values())[0], dict):
                     self.update(value, target, old_target, index)
             else:
-                self.update(value, target[index], old_target[index], key)
+                print(f"TARGET {target}")
+                print(f"OLD_TARGET {old_target}")
+                self.update(value, target[index_update], old_target[index], key)
 
 
     def parse(self):
@@ -121,6 +124,8 @@ class Comparison:
             self.apply_diffs_recursive(self.diffs, self.parsed_changed_file, None, self.parsed_old_file, self.parsed_new_file)
         self.diffs = diff(self.parsed_old_file, self.parsed_new_file, syntax='explicit', dump=False)
         print(f"NEW DIFFS: {self.diffs}")
+        print(f"NEW FILE {self.parsed_new_file}")
+        print(f"OLD_FILE {self.parsed_old_file}")
         if self.diffs:
             key = None
             while not isinstance(key, int):
@@ -137,6 +142,7 @@ class Comparison:
             if current_action is None or current_action == "update":
                 print("----------UPDATING----------")
                 print(f"diffs: {diffs}")
+                print(target)
                 for key, value in diffs.items():
                     if isinstance(key, Symbol): # character is action
                         next_action = key.label
@@ -144,11 +150,10 @@ class Comparison:
                     elif isinstance(value, dict):
                         if isinstance(parsed_old_file, list) and isinstance(key,int):
                             if len(parsed_old_file) <= key:
-                                self.apply_diffs_recursive(value, target[key], current_action, parsed_old_file, parsed_new_file[key])
+                                self.apply_diffs_recursive(value, target[key], current_action, parsed_old_file[len(parsed_old_file)-1], parsed_new_file[key])
                             else:
                                 self.apply_diffs_recursive(value, target[key], current_action, parsed_old_file[key], parsed_new_file[key])
                         else:
-                            print(target, key)
                             self.apply_diffs_recursive(value, target[key], current_action, parsed_old_file[key], parsed_new_file[key])
                     elif isinstance(value, list):
                         for i, v in enumerate(value):
@@ -166,16 +171,13 @@ class Comparison:
                     position, value = change
                     print(f"target[position] {target[position]}")
                     to_insert = self.format_changes(target, position, "Underline")
+                    if isinstance(to_insert, list):
+                        to_insert = self.remove_formatting(to_insert[0], "Underline")
+                    else:
+                        to_insert = self.remove_formatting(to_insert, "Underline")
+                    parsed_old_file.insert(position, to_insert)
                     print(f"INSERT {to_insert}")
-                    parsed_old_file.insert(position, to_insert["c"])
-                    # if isinstance(to_insert, list):
-                    #     elements_inserted = self.find_changed_elements(to_insert, "Underline", target)
-                    # else:
-                    #     elements_inserted = [to_insert]
-                    # for element in elements_inserted:
-                    #     print(f"ELEMENT: {element}")
-                    #     parsed_old_file.insert(position, element["c"])
-
+                    print(f"OLD TARGET IN INSERT {parsed_old_file}")
 
             elif current_action == "delete":
                 print("----------DELETE----------")
@@ -184,10 +186,17 @@ class Comparison:
                 for delete_position in diffs:
                     to_insert = self.format_changes(parsed_old_file, delete_position, "Strikeout")
                     print(parsed_old_file)
-                    print(f"INSERT {to_insert}")
+                    # print(f"DELETE{to_insert}")
+
                     target.insert(delete_position, to_insert)
-                    parsed_new_file.insert(delete_position, to_insert['c'][0])
-                    parsed_old_file[delete_position] = to_insert['c'][0]
+                    if isinstance(to_insert, list):
+                        to_insert = self.remove_formatting(to_insert[0], "Strikeout")
+                    else:
+                        to_insert = self.remove_formatting(to_insert, "Strikeout")
+                    parsed_new_file.insert(delete_position, to_insert)
+                    parsed_old_file[delete_position] = to_insert
+                    print(f"TARGET {parsed_new_file}")
+                    print(f"OLD_TARGET {parsed_old_file}")
                     # elements_deleted = self.find_changed_elements(to_insert, "Underline", target)
                     # for element in elements_deleted:
                     #     print(f"ELEMENT: {element}")
@@ -195,18 +204,27 @@ class Comparison:
                     #     parsed_new_file.insert(delete_position, element['c'][0])
                     #     parsed_old_file[delete_position] = element['c'][0]
     
-    def find_changed_elements(self, element, formatting, target):
-        if isinstance(element, dict):
-                if element.get('t') == formatting:
-                    target = element
-                if 'c' in element:
-                    for child in element['c']:
-                        self.find_changed_elements(child, formatting, target['c'])
-        elif isinstance(element, list):
-            for i, item in enumerate(element):
-                self.find_changed_elements(item, formatting, target[i])
+    # def find_changed_elements(self, element, formatting, target):
+    #     if isinstance(element, dict):
+    #             if element.get('t') == formatting:
+    #                 target = element
+    #             if 'c' in element:
+    #                 for child in element['c']:
+    #                     self.find_changed_elements(child, formatting, target['c'])
+    #     elif isinstance(element, list):
+    #         for i, item in enumerate(element):
+    #             self.find_changed_elements(item, formatting, target[i])
 
-
+    def remove_formatting(self, data, formatting):
+        if isinstance(data, dict):
+            if data.get('t') == formatting:
+                return data.get('c')[0]
+            else:
+                return {key: self.remove_formatting(value, formatting) for key, value in data.items()}
+        elif isinstance(data, list):
+            return [self.remove_formatting(item, formatting) for item in data]
+        else:
+            return data
 
         # except Exception as e:
         #     print(f"Parsing error: {e}")
@@ -219,8 +237,8 @@ def main():
     file_converter.convert_with_pandoc('typst', 'json', 'old.typ', 'old.json')
     comparison = Comparison("new.json", "old.json")
     comparison.parse()
-    print(comparison.parsed_new_file)
-    print(comparison.parsed_old_file)
+    # print(comparison.parsed_new_file)
+    # print(comparison.parsed_old_file)
     file_converter.write_to_json_file(comparison.parsed_changed_file, 'compared_new.json')
     print("zapisało")
     file_converter.convert_with_pandoc('json', 'typst', 'compared_new.json', 'compared_new.typ')
