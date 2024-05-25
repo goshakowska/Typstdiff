@@ -34,8 +34,8 @@ def perform_jsondiff_on_typst_files(old_version_file, new_version_file, diff_fil
     file_converter.convert_with_pandoc('typst', 'json', f'./tests/test_working_types/{old_v_file}/{new_v_file}.typ', f'./tests/test_working_types/{old_v_file}/{new_v_file}.json')
     file_converter.convert_with_pandoc('typst', 'json', f'./tests/test_working_types/{old_v_file}/{old_v_file}.typ', f'./tests/test_working_types/{old_v_file}/{old_v_file}.json')
     comparison = Comparison(f'./tests/test_working_types/{old_v_file}/{new_v_file}.json', f'./tests/test_working_types/{old_v_file}/{old_v_file}.json')
-    comparison.apply_diffs_recursive(comparison.diffs, comparison.parsed_new_file, None, comparison.parsed_old_file)
-    return comparison.parsed_new_file
+    comparison.parse()
+    return comparison.parsed_changed_file
 
 
 @pytest.fixture

@@ -170,7 +170,7 @@ def main(arguments):
     if args.only_deleted:
         comparison.show_only_deleted()
 
-    comparison.apply_diffs_recursive(comparison.diffs, comparison.parsed_new_file, None, comparison.parsed_old_file)
+    comparison.parse()
     print(comparison.parsed_new_file)
     file_converter.write_to_json_file(comparison.parsed_new_file, f'{args.diff_output_file}.json')
     file_converter.convert_with_pandoc('json', 'typst', f'{args.diff_output_file}.json', f'{args.diff_output_file}.typ')

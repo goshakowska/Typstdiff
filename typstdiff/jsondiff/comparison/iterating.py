@@ -128,8 +128,8 @@ class Comparison:
                 if key.label == 'update' and isinstance(list(value.values())[0], dict):
                     self.update(value, target, old_target, index)
             else:
-                print(f"TARGET {target}")
-                print(f"OLD_TARGET {old_target}")
+                # print(f"TARGET {target}")
+                # print(f"OLD_TARGET {old_target}")
                 self.update(value, target[index_update], old_target[index], key)
 
 
@@ -138,8 +138,8 @@ class Comparison:
             self.apply_diffs_recursive(self.diffs, self.parsed_changed_file, None, self.parsed_old_file, self.parsed_new_file)
         self.diffs = diff(self.parsed_old_file, self.parsed_new_file, syntax='explicit', dump=False)
         print(f"NEW DIFFS: {self.diffs}")
-        print(f"NEW FILE {self.parsed_new_file}")
-        print(f"OLD_FILE {self.parsed_old_file}")
+        # print(f"NEW FILE {self.parsed_new_file}")
+        # print(f"OLD_FILE {self.parsed_old_file}")
         if self.diffs:
             key = None
             while not isinstance(key, int):
@@ -183,15 +183,15 @@ class Comparison:
 
                 for change in diffs:
                     position, value = change
-                    print(f"target[position] {target[position]}")
+                    # print(f"target[position] {target[position]}")
                     to_insert = self.format_changes(target, position, "Underline")
                     if isinstance(to_insert, list):
                         to_insert = self.remove_formatting(to_insert[0], "Underline")
                     else:
                         to_insert = self.remove_formatting(to_insert, "Underline")
                     parsed_old_file.insert(position, to_insert)
-                    print(f"INSERT {to_insert}")
-                    print(f"OLD TARGET IN INSERT {parsed_old_file}")
+                    # print(f"INSERT {to_insert}")
+                    # print(f"OLD TARGET IN INSERT {parsed_old_file}")
 
             elif current_action == "delete":
                 print("----------DELETE----------")
@@ -209,8 +209,8 @@ class Comparison:
                         to_insert = self.remove_formatting(to_insert, "Strikeout")
                     parsed_new_file.insert(delete_position, to_insert)
                     parsed_old_file[delete_position] = to_insert
-                    print(f"TARGET {parsed_new_file}")
-                    print(f"OLD_TARGET {parsed_old_file}")
+                    # print(f"TARGET {parsed_new_file}")
+                    # print(f"OLD_TARGET {parsed_old_file}")
                     # elements_deleted = self.find_changed_elements(to_insert, "Underline", target)
                     # for element in elements_deleted:
                     #     print(f"ELEMENT: {element}")
@@ -244,22 +244,22 @@ class Comparison:
         #     print(f"Parsing error: {e}")
         #     print(f"Skipping...")
 
-def main():
-    # later add paths from user arguments
-    file_converter = FileConverter()
-    file_converter.convert_with_pandoc('typst', 'json', 'new.typ', 'new.json')
-    file_converter.convert_with_pandoc('typst', 'json', 'old.typ', 'old.json')
-    comparison = Comparison("new.json", "old.json")
-    comparison.parse()
-    # print(comparison.parsed_new_file)
-    # print(comparison.parsed_old_file)
-    file_converter.write_to_json_file(comparison.parsed_changed_file, 'compared_new.json')
-    print("zapisało")
-    file_converter.convert_with_pandoc('json', 'typst', 'compared_new.json', 'compared_new.typ')
-    # later add user arguments to format text
-    format_lines = [f"#show underline : it => {{highlight(fill: teal,text(red, it))}}", f"#show strike : it => {{highlight(fill: green, text(yellow, it))}}"]
-    file_converter.write_lines(format_lines, 'compared_new.typ')
-    file_converter.compile_to_pdf("compared_new.typ")
+# def main():
+#     # later add paths from user arguments
+#     file_converter = FileConverter()
+#     file_converter.convert_with_pandoc('typst', 'json', 'new.typ', 'new.json')
+#     file_converter.convert_with_pandoc('typst', 'json', 'old.typ', 'old.json')
+#     comparison = Comparison("new.json", "old.json")
+#     comparison.parse()
+#     # print(comparison.parsed_new_file)
+#     # print(comparison.parsed_old_file)
+#     file_converter.write_to_json_file(comparison.parsed_changed_file, 'compared_new.json')
+#     print("zapisało")
+#     file_converter.convert_with_pandoc('json', 'typst', 'compared_new.json', 'compared_new.typ')
+#     # later add user arguments to format text
+#     format_lines = [f"#show underline : it => {{highlight(fill: teal,text(red, it))}}", f"#show strike : it => {{highlight(fill: green, text(yellow, it))}}"]
+#     file_converter.write_lines(format_lines, 'compared_new.typ')
+#     file_converter.compile_to_pdf("compared_new.typ")
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
