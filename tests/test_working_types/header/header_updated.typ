@@ -1,2 +1,2 @@
-= Updated heading
+= Updatedheading
 = Second heading

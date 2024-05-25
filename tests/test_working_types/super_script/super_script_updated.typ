@@ -1,3 +1,3 @@
-First#super[updated super text]
+First#super[updated text]
 Normal text
 Second#super[super text]

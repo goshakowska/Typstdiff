@@ -1,4 +1,4 @@
 *first*\
-#strong[second updated]\
-*third updated*\
+#strong[second_updated]\
+*third_updated*\
 #strong[forth]
