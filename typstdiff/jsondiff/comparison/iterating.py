@@ -171,8 +171,6 @@ class Comparison:
                       isinstance(list(value.values())[0], dict):
                     self.update(value, target, old_target, index)
             else:
-                # print(f"TARGET {target}")
-                # print(f"OLD_TARGET {old_target}")
                 self.update(value,
                             target[index_update],
                             old_target[index],
@@ -190,8 +188,6 @@ class Comparison:
                           syntax='explicit',
                           dump=False)
         print(f"NEW DIFFS: {self.diffs}")
-        # print(f"NEW FILE {self.parsed_new_file}")
-        # print(f"OLD_FILE {self.parsed_old_file}")
         if self.diffs:
             key = None
             while not isinstance(key, int):
@@ -203,6 +199,35 @@ class Comparison:
                                     key)
                     else:
                         self.diffs = value
+
+    def process_insert(self, diffs, target, parsed_old_file):
+        for change in diffs:
+            position, _ = change
+            to_insert = self.format_changes(target, position, "Underline")
+            if isinstance(to_insert, list):
+                to_insert = [self.remove_formatting(to_insert[0],
+                                                    "Underline")]
+            else:
+                to_insert = self.remove_formatting(to_insert, "Underline")
+            parsed_old_file.insert(position, to_insert)
+
+    def process_delete(self, diffs, target, parsed_old_file, parsed_new_file):
+        diffs.reverse()
+        print(f"diffs: {diffs}")
+        for delete_position in diffs:
+            to_insert = self.format_changes(parsed_old_file,
+                                            delete_position,
+                                            "Strikeout")
+            print(parsed_old_file)
+
+            target.insert(delete_position, to_insert)
+            if isinstance(to_insert, list):
+                to_insert = self.remove_formatting(to_insert[0],
+                                                   "Strikeout")
+            else:
+                to_insert = self.remove_formatting(to_insert, "Strikeout")
+            parsed_new_file.insert(delete_position, to_insert)
+            parsed_old_file[delete_position] = to_insert
 
     def apply_diffs_recursive(self, diffs,
                               target, current_action,
@@ -252,62 +277,12 @@ class Comparison:
         elif current_action == "insert":
             print("----------INSERTING----------")
             print(f"diffs: {diffs}")
-
-            for change in diffs:
-                position, value = change
-                # print(f"target[position] {target[position]}")
-                to_insert = self.format_changes(target, position, "Underline")
-                if isinstance(to_insert, list):
-                    to_insert = [self.remove_formatting(to_insert[0],
-                                                        "Underline")]
-                else:
-                    to_insert = self.remove_formatting(to_insert, "Underline")
-                parsed_old_file.insert(position, to_insert)
-                # print(f"INSERT {to_insert}")
-                # print(f"OLD TARGET IN INSERT {parsed_old_file}")
+            self.process_insert(diffs, target, parsed_old_file)
 
         elif current_action == "delete":
             print("----------DELETE----------")
-            diffs.reverse()
-            print(f"diffs: {diffs}")
-            for delete_position in diffs:
-                to_insert = self.format_changes(parsed_old_file,
-                                                delete_position,
-                                                "Strikeout")
-                print(parsed_old_file)
-                # print(f"DELETE{to_insert}")
-
-                target.insert(delete_position, to_insert)
-                if isinstance(to_insert, list):
-                    to_insert = self.remove_formatting(to_insert[0],
-                                                       "Strikeout")
-                else:
-                    to_insert = self.remove_formatting(to_insert, "Strikeout")
-                parsed_new_file.insert(delete_position, to_insert)
-                parsed_old_file[delete_position] = to_insert
-                # print(f"TARGET {parsed_new_file}")
-                # print(f"OLD_TARGET {parsed_old_file}")
-                # elements_deleted = self.find_changed_elements(to_insert,
-                #                                                 "Underline",
-                #                                                 target)
-                # for element in elements_deleted:
-                #     print(f"ELEMENT: {element}")
-                #     target.insert(delete_position, element)
-                #     parsed_new_file.insert(delete_position, element['c'][0])
-                #     parsed_old_file[delete_position] = element['c'][0]
-
-    # def find_changed_elements(self, element, formatting, target):
-    #     if isinstance(element, dict):
-    #             if element.get('t') == formatting:
-    #                 target = element
-    #             if 'c' in element:
-    #                 for child in element['c']:
-    #                     self.find_changed_elements(child,
-    #                                               formatting,
-    #                                               target['c'])
-    #     elif isinstance(element, list):
-    #         for i, item in enumerate(element):
-    #             self.find_changed_elements(item, formatting, target[i])
+            self.process_delete(diffs, target, parsed_old_file,
+                                parsed_new_file)
 
     def remove_formatting(self, data, formatting):
         if isinstance(data, dict):
@@ -320,37 +295,3 @@ class Comparison:
             return [self.remove_formatting(item, formatting) for item in data]
         else:
             return data
-
-        # except Exception as e:
-        #     print(f"Parsing error: {e}")
-        #     print(f"Skipping...")
-
-# def main():
-#     # later add paths from user arguments
-#     file_converter = FileConverter()
-#     file_converter.convert_with_pandoc('typst',
-#                                       'json',
-#                                       'new.typ',
-#                                       'new.json')
-#     file_converter.convert_with_pandoc('typst',
-#                                       'json',
-#                                       'old.typ',
-#                                       'old.json')
-#     comparison = Comparison("new.json", "old.json")
-#     comparison.parse()
-#     # print(comparison.parsed_new_file)
-#     # print(comparison.parsed_old_file)
-#     file_converter.write_to_json_file(comparison.parsed_changed_file,
-#                                       'compared_new.json')
-#     print("zapisało")
-#     file_converter.convert_with_pandoc('json', 'typst', 'compared_new.json',
-#                                       'compared_new.typ')
-#     # later add user arguments to format text
-#     format_lines = \
-#         [f"#show underline : it => {{highlight(fill: teal,text(red,it))}}",\
-#         f"#show strike : it => {{highlight(fill: green, text(yellow, it))}}"]
-#     file_converter.write_lines(format_lines, 'compared_new.typ')
-#     file_converter.compile_to_pdf("compared_new.typ")
-
-# if __name__ == "__main__":
-#     main()
