@@ -258,8 +258,8 @@ class Comparison:
                 # print(f"target[position] {target[position]}")
                 to_insert = self.format_changes(target, position, "Underline")
                 if isinstance(to_insert, list):
-                    to_insert = self.remove_formatting(to_insert[0],
-                                                       "Underline")
+                    to_insert = [self.remove_formatting(to_insert[0],
+                                                        "Underline")]
                 else:
                     to_insert = self.remove_formatting(to_insert, "Underline")
                 parsed_old_file.insert(position, to_insert)
