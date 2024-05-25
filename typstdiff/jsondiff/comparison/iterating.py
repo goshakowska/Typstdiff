@@ -40,7 +40,8 @@ class Comparison:
             "Code",
             "Space",
             "SoftBreak",
-            "LineBreak"
+            "LineBreak",
+            "InlineMath"
         }
 
     def parse_load_file(self, path):
@@ -64,21 +65,7 @@ class Comparison:
 
     def parse_dict(self, dict, underline_strike):
         print(f"parse_dict: {dict}")
-        if dict["t"] in ("Link",
-                         "Math",
-                         "Str",
-                         "Emph",
-                         "Strong",
-                         "Superscript",
-                         "Subscript",
-                         "SmallCaps",
-                         "Quoted",
-                         "Cite",
-                         "Code",
-                         "Space",
-                         "SoftBreak",
-                         "LineBreak",
-                         "InlineMath"):  # type of char
+        if dict["t"] in self.DICT_TYPES:
             para_copy = copy.deepcopy(dict)
             dict['t'] = underline_strike
             dict["c"] = [para_copy]
@@ -222,8 +209,8 @@ class Comparison:
 
             target.insert(delete_position, to_insert)
             if isinstance(to_insert, list):
-                to_insert = self.remove_formatting(to_insert[0],
-                                                   "Strikeout")
+                to_insert = [self.remove_formatting(to_insert[0],
+                                                    "Strikeout")]
             else:
                 to_insert = self.remove_formatting(to_insert, "Strikeout")
             parsed_new_file.insert(delete_position, to_insert)
@@ -252,7 +239,7 @@ class Comparison:
                                 value,
                                 target[key],
                                 current_action,
-                                parsed_old_file[len(parsed_old_file)-1],
+                                parsed_old_file,
                                 parsed_new_file[key])
                         else:
                             self.apply_diffs_recursive(value, target[key],
