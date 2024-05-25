@@ -172,7 +172,7 @@ def main(arguments):
 
     comparison.parse()
     print(comparison.parsed_new_file)
-    file_converter.write_to_json_file(comparison.parsed_new_file, f'{args.diff_output_file}.json')
+    file_converter.write_to_json_file(comparison.parsed_changed_file, f'{args.diff_output_file}.json')
     file_converter.convert_with_pandoc('json', 'typst', f'{args.diff_output_file}.json', f'{args.diff_output_file}.typ')
     file_converter.write_lines(format_lines, f'{args.diff_output_file}.typ')
     file_converter.compile_to_pdf(f'{args.diff_output_file}.typ')
