@@ -1,8 +1,8 @@
 from typstdiff import __version__
 import pytest
-from typstdiff.jsondiff.comparison.file_converter import FileConverter
-from typstdiff.jsondiff.comparison.iterating import Comparison
-from typstdiff.jsondiff.comparison.main import get_file_name_without_extension
+from typstdiff.file_converter import FileConverter
+from typstdiff.iterating import Comparison
+from typstdiff.main import get_file_name_without_extension
 
 
 pytestmark = [
