@@ -14,10 +14,10 @@ class FileConverter:
             subprocess.run(['pandoc', '-f', from_format, '-t', to_format, input_file], stdout=output_new_file)
         output_new_file.close()
 
-    def write_lines(self, lines:list, file_path):
+    def write_lines(self, lines: list, file_path):
         with open(file_path, 'r+') as file:
             content = file.read()
-            file.seek(0,0)
+            file.seek(0, 0)
             for line in lines:
                 file.write(line + "\n")
             file.write(content)

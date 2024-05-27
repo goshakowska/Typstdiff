@@ -148,13 +148,13 @@ def main(arguments):
     args = parser.parse_args(arguments[1:])
 
     for arg_name in ['old_version', 'new_version']:
-            check_if_typst_extension(getattr(args, arg_name))
-            setattr(args, arg_name, get_file_name_without_extension(getattr(args, arg_name)))
+        check_if_typst_extension(getattr(args, arg_name))
+        setattr(args, arg_name, get_file_name_without_extension(getattr(args, arg_name)))
 
     if args.only_inserted and (args.delete_highlight or args.delete_font):
         print("Can't use --only-inserted functionality and customize --delete-highlight or --delete-font simultaneously.")
 
-    if args.only_deleted and (args.insert_highlight or args.insert_font) :
+    if args.only_deleted and (args.insert_highlight or args.insert_font):
         print("Can't use --only-deleted functionality and customize --insert-highlight or --insert-font simultaneously.")
 
     format_lines = format_styles(args)
