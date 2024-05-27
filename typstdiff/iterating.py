@@ -89,6 +89,18 @@ class Comparison:
             if isinstance(para, dict):
                 self.parse_dict(para, underline_strike)
 
+    def parse_header(self, target, position, format_action):
+        print(f"parsing header {target[position]}")
+        for i in range(len(target[position]["c"])):
+            if isinstance(target[position]["c"][i], list):
+                for k in range(len(target[position]["c"][i])):
+                    if isinstance(target[position]["c"][i][k], dict):
+                        target_copy = copy.deepcopy(
+                            target[position]["c"][i][k]
+                            )
+                        target[position]["c"][i][k]['t'] = format_action
+                        target[position]["c"][i][k]['c'] = [target_copy]
+
     def format_changes(self, target, position, format_action):
         print(target)
         if isinstance(target[position], list):
@@ -97,6 +109,10 @@ class Comparison:
                     self.parse_list_dict(target[position][i], format_action)
                     # if delete then return insert
                     to_insert = [target[position][i]]
+        elif target[position]["t"] == "Header":
+            self.parse_header(target, position, format_action)
+            to_insert = target[position]
+
         elif target[position]['t'] in ("Para",
                                        "BulletList",
                                        "OrderedList",
@@ -114,27 +130,29 @@ class Comparison:
     def update(self, diffs, target, old_target, index):
         print(f"UPDATE {diffs} {index}")
         print(f"TARGET {target}")
+        print(f"OLD_TARGET {old_target}")
         if len(list(diffs.values())) > 1 and all(isinstance(key, int)
                                                  for key in diffs.keys()):
             new_diffs = {}
             for to_add, (key, value) in enumerate(diffs.items()):
                 new_diffs[(key, key+to_add)] = value
             diffs = new_diffs
+        print(index)
         if isinstance(index, tuple):
             index_update = index[1]
             index = index[0]
         else:
             index_update = index
-        if isinstance(target, list) and target[index]["t"] in ["Link"]:
-            target.insert(index+1, {"t": "Underline", "c": [target[index]]})
-            target[index] = {"t": "Strikeout", "c": [old_target[index]]}
-        else:
-            for key, value in diffs.items():
-                print(key, value)
+        for key, value in diffs.items():
+            print(key, value)
+            if isinstance(target, list) and isinstance(target[index], dict) and target[index]["t"] in ["Link", "Image"]:
+                target[index] = {"t": "Underline", "c": [target[index]]}
+                target.insert(index, {"t": "Strikeout", "c": [old_target[index]]})
+            else:
                 if (isinstance(value, list) and isinstance(value[0], dict) and
                         not isinstance(list(value[0].values())[0], dict)) or \
                         (isinstance(value, dict) and
-                         not isinstance(list(value.values())[0], dict)):
+                            not isinstance(list(value.values())[0], dict)):
                     target_copy = copy.deepcopy(target[index_update])
                     old_target_copy = copy.deepcopy(old_target[index])
                     target[index_update] = {"t": "Strikeout",
@@ -144,11 +162,11 @@ class Comparison:
                                                    "c": [target_copy]})
                 elif isinstance(key, Symbol):
                     if key.label == 'update' and \
-                       isinstance(list(value.values())[0], dict):
+                     isinstance(list(value.values())[0], dict):
                         self.update(value, target, old_target, index)
                 else:
                     self.update(value,
-                                target[index_update],
+                                target[index],
                                 old_target[index],
                                 key)
 
@@ -215,7 +233,7 @@ class Comparison:
             print(f"diffs: {diffs}")
             print(target)
             for key, value in diffs.items():
-                if key == "c" and target["t"] in ["Link"]:
+                if key == "c" and target["t"] in ["Link", "Image"]:
                     continue
                 elif isinstance(key, Symbol):  # character is action
                     next_action = key.label
