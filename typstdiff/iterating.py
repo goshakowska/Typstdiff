@@ -27,7 +27,6 @@ class Comparison:
         }
 
         self.DICT_TYPES = {
-            "Math",
             "Str",
             "Emph",
             "Strong",
@@ -126,25 +125,39 @@ class Comparison:
             print(target, position, to_insert, format_action)
         return to_insert
 
+    def dict_depth(self, d, level=1):
+        if not isinstance(d, dict) or not d:
+            return level
+        return max(self.dict_depth(v, level + 1) for k, v in d.items())
+
     def update(self, diffs, target, old_target, index):
-        print(f"UPDATE {diffs} {index}")
-        print(f"TARGET {target}")
-        print(f"OLD_TARGET {old_target}")
+
         if len(list(diffs.values())) > 1 and all(isinstance(key, int)
                                                  for key in diffs.keys()):
             new_diffs = {}
-            for to_add, (key, value) in enumerate(diffs.items()):
-                new_diffs[(key, key+to_add)] = value
+            to_add = 0
+            for key, value in diffs.items():
+                print(value, self.dict_depth(value))
+                if not self.dict_depth(value) > 3:
+                    new_diffs[(key, key+to_add)] = value
+                    to_add += 1
+                else:
+                    new_diffs[key, key+to_add] = value
             diffs = new_diffs
+        print(diffs)
         print(index)
         if isinstance(index, tuple):
             index_update = index[1]
             index = index[0]
         else:
             index_update = index
+        print(f"UPDATE {diffs} {index, index_update}")
+        # print(f"TARGET {target}")
+        # print(f"OLD_TARGET {old_target}")
         for key, value in diffs.items():
             print(key, value)
-            if isinstance(target, list) and isinstance(target[index], dict) and target[index]["t"] in ["Link", "Image"]:
+            if isinstance(target, list) and isinstance(target[index], dict) and target[index]["t"] in ["Link", "Image", "Math"]:
+                print("LINK LUB IMAGE")
                 target[index] = {"t": "Underline", "c": [target[index]]}
                 target.insert(index, {"t": "Strikeout", "c": [old_target[index]]})
 
@@ -152,20 +165,29 @@ class Comparison:
                     not isinstance(list(value[0].values())[0], dict)) or \
                     (isinstance(value, dict) and
                         not isinstance(list(value.values())[0], dict)):
+                print("UPDATE ZWYKŁY")
                 target_copy = copy.deepcopy(target[index_update])
                 old_target_copy = copy.deepcopy(old_target[index])
+                print(target_copy, old_target_copy)
                 target[index_update] = {"t": "Strikeout",
                                         "c": [old_target_copy]
                                         }
                 target.insert(index_update+1, {"t": "Underline",
-                                                "c": [target_copy]})
+                                               "c": [target_copy]})
             elif isinstance(key, Symbol):
+                print("WEJŚCIE W SYMBOL")
                 if key.label == 'update' and \
-                    isinstance(list(value.values())[0], dict):
-                    self.update(value, target, old_target, index)
+                   isinstance(list(value.values())[0], dict):
+                    self.update(value, target, old_target, (index, index_update))
             else:
+                print("ELSE")
+                # print(f"OLD ELSE: {old_target}")
+                # print(f"TARGET ELSE: {target}")
+                print(f"INDEX: {index, index_update}")
+                # print(target[index_update])
+                # print(old_target[index])
                 self.update(value,
-                            target[index],
+                            target[index_update],
                             old_target[index],
                             key)
 
@@ -175,12 +197,26 @@ class Comparison:
                                        self.parsed_changed_file,
                                        None,
                                        self.parsed_old_file,
-                                       self.parsed_new_file)
+                                       self.parsed_new_file, "insert")
+        self.diffs = diff(self.parsed_old_file,
+                          self.parsed_new_file,
+                          syntax='explicit',
+                          dump=False)
+        print(f"DELETE DIFFS {self.diffs}")
+        if self.diffs:
+            self.apply_diffs_recursive(self.diffs,
+                                       self.parsed_changed_file,
+                                       None,
+                                       self.parsed_old_file,
+                                       self.parsed_new_file, "delete")
+        print(f"OLD: {self.parsed_old_file}\n")
+        print(f"NEW: {self.parsed_new_file}\n")
         self.diffs = diff(self.parsed_old_file,
                           self.parsed_new_file,
                           syntax='explicit',
                           dump=False)
         print(f"NEW DIFFS: {self.diffs}")
+
         if self.diffs:
             key = None
             while not isinstance(key, int):
@@ -203,31 +239,44 @@ class Comparison:
             else:
                 to_insert = self.remove_formatting(to_insert, "Underline")
             parsed_old_file.insert(position, to_insert)
+            print(f"PARSED OLD FILE: {parsed_old_file[position]}")
 
     def process_delete(self, diffs, target, parsed_old_file, parsed_new_file):
         diffs.reverse()
         print(f"diffs: {diffs}")
-        print(f"TARGET: {target}")
-        print(f"OLD FILE: {parsed_old_file}")
-        print(f"NEW FILE: {parsed_new_file}")
+        # print(f"TARGET: {target}")
+        # print(f"OLD FILE: {parsed_old_file}")
+        # print(f"NEW FILE: {parsed_new_file}")
+        # print(f"LEN:{to_add}")
+        # to_add = []
         for delete_position in diffs:
             to_insert = self.format_changes(parsed_old_file,
                                             delete_position,
                                             "Strikeout")
-            print(parsed_old_file)
-
+            # print(parsed_old_file[delete_position])
+            # print(target[delete_position])
+            # print(parsed_new_file[delete_position])
             target.insert(delete_position, to_insert)
             if isinstance(to_insert, list):
                 to_insert = [self.remove_formatting(to_insert[0],
                                                     "Strikeout")]
             else:
                 to_insert = self.remove_formatting(to_insert, "Strikeout")
-            parsed_new_file.insert(delete_position, to_insert)
             parsed_old_file[delete_position] = to_insert
+            parsed_new_file.insert(delete_position, to_insert)
+            print(f"NOWE O {parsed_new_file[delete_position]}, {delete_position}")
+        #     to_add.append(to_insert)
+        # diffs.reverse()
+        # # first = diffs[0]
+        # print(f"TO_ADD: {to_add}")
+        # for i, element in enumerate(reversed(to_add)):
+        #     parsed_new_file.insert(diffs[-1], element)
+        #     parsed_old_file[diffs[-1-i]] = to_add[i]
+            # to_add = 0
 
     def apply_diffs_recursive(self, diffs,
                               target, current_action,
-                              parsed_old_file, parsed_new_file):
+                              parsed_old_file, parsed_new_file, only):
         # print(target)
         # try:
         if current_action is None or current_action == "update":
@@ -237,7 +286,7 @@ class Comparison:
             print(f"OLD: {parsed_old_file}")
             sorted_diffs = []
             for key, value in reversed(list(diffs.items())):
-                if key == Symbol("insert"):
+                if key == Symbol("delete"):
                     sorted_diffs.insert(0, (key, value))
                 else:
                     sorted_diffs.append((key, value))
@@ -247,8 +296,8 @@ class Comparison:
                     next_action = key.label
                     self.apply_diffs_recursive(value, target,
                                             next_action, parsed_old_file,
-                                            parsed_new_file)
-                elif isinstance(target, dict) and "t" in target.keys() and target["t"] in ["Link", "Image"]:
+                                            parsed_new_file, only)
+                elif isinstance(target, dict) and "t" in target.keys() and target["t"] in ["Link", "Image", "Math"]:
                     continue
 
                 elif isinstance(value, dict):
@@ -260,33 +309,33 @@ class Comparison:
                                 target[key],
                                 current_action,
                                 parsed_old_file,
-                                parsed_new_file[key])
+                                parsed_new_file[key], only)
                         else:
                             self.apply_diffs_recursive(value, target[key],
                                                     current_action,
                                                     parsed_old_file[key],
-                                                    parsed_new_file[key])
+                                                    parsed_new_file[key], only)
                     else:
                         self.apply_diffs_recursive(value, target[key],
                                                 current_action,
                                                 parsed_old_file[key],
-                                                parsed_new_file[key])
+                                                parsed_new_file[key], only)
                 elif isinstance(value, list):
                     for i, v in enumerate(value):
                         if isinstance(v, dict):
                                 self.apply_diffs_recursive(v, target[key][i],
                                                         current_action,
                                                         parsed_old_file[key][i],
-                                                        parsed_new_file[key][i])
+                                                        parsed_new_file[key][i], only)
                         else:
                             target[key][i] = v
 
-        elif current_action == "insert":
+        elif current_action == "insert" and only == "insert":
             print("----------INSERTING----------")
             print(f"diffs: {diffs}")
             self.process_insert(diffs, target, parsed_old_file)
 
-        elif current_action == "delete":
+        elif current_action == "delete" and only == "delete":
             print("----------DELETE----------")
             self.process_delete(diffs, target, parsed_old_file,
                                 parsed_new_file)
