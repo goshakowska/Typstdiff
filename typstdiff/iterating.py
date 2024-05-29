@@ -39,7 +39,7 @@ class Comparison:
             "Space",
             "SoftBreak",
             "LineBreak",
-            "InlineMath"
+            "Math"
         }
 
     def parse_load_file(self, path):
@@ -158,8 +158,8 @@ class Comparison:
             print(key, value)
             if isinstance(target, list) and isinstance(target[index], dict) and target[index]["t"] in ["Link", "Image", "Math"]:
                 print("LINK LUB IMAGE")
-                target[index] = {"t": "Underline", "c": [target[index]]}
-                target.insert(index, {"t": "Strikeout", "c": [old_target[index]]})
+                target[index_update] = {"t": "Underline", "c": [target[index_update]]}
+                target.insert(index_update, {"t": "Strikeout", "c": [old_target[index]]})
 
             elif (isinstance(value, list) and isinstance(value[0], dict) and
                     not isinstance(list(value[0].values())[0], dict)) or \
@@ -193,6 +193,7 @@ class Comparison:
 
     def parse(self):
         if self.diffs:
+            # self.diffs = self.update_insert_indexes(self.diffs)
             self.apply_diffs_recursive(self.diffs,
                                        self.parsed_changed_file,
                                        None,
@@ -232,7 +233,12 @@ class Comparison:
     def process_insert(self, diffs, target, parsed_old_file):
         for change in diffs:
             position, _ = change
-            to_insert = self.format_changes(target, position, "Underline")
+            if isinstance(position, tuple):
+                target_position = position[0]
+                position = position[1]
+            else:
+                target_position = position
+            to_insert = self.format_changes(target, target_position, "Underline")
             if isinstance(to_insert, list):
                 to_insert = [self.remove_formatting(to_insert[0],
                                                     "Underline")]
@@ -274,11 +280,35 @@ class Comparison:
         #     parsed_old_file[diffs[-1-i]] = to_add[i]
             # to_add = 0
 
+    def update_insert_indexes(self, diffs):
+        for key, value in diffs.items():
+            if isinstance(key, int):
+                pass
+            elif key.label == "insert":
+                insert_diffs = value
+            elif key.label == "delete":
+                delete_diffs = value
+        new_insert_diffs = []
+        for insert in insert_diffs:
+            print(len([num for num in delete_diffs if num < insert[0]]))
+            new_insert_diffs.append(((insert[0], insert[0] + len([num for num in delete_diffs if num < insert[0]])), insert[1]))
+        for key, value in diffs.items():
+            if isinstance(key, Symbol) and key.label == "insert":
+                diffs[key] = new_insert_diffs
+                break
+        return diffs
+
     def apply_diffs_recursive(self, diffs,
                               target, current_action,
                               parsed_old_file, parsed_new_file, only):
         # print(target)
         # try:
+        if isinstance(diffs, dict):
+            if all(elem in [symbol.label for symbol in list(diffs.keys()) if isinstance(symbol, Symbol)] for elem in ["insert", "delete"]):
+                diffs = self.update_insert_indexes(diffs)
+                print(diffs)
+                print("ZNALAZŁO")
+
         if current_action is None or current_action == "update":
             print("----------UPDATING----------")
             print(f"diffs: {diffs}")
