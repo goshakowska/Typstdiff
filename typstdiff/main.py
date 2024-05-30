@@ -67,7 +67,7 @@ def parse_color_param(provided_color):
 def format_styles(custom_setting):
     """
     Generates a list of format lines based on the provided custom settings for highlighting and font styles.
-    Args:
+    Parameters:
         custom_setting (CustomSetting): An object containing the custom settings for highlighting and font styles.
     Returns:
         List[str]: A list of format lines that can be used to customize the appearance of inserted and deleted changes in a Typst file.
@@ -140,7 +140,7 @@ def get_file_path_without_extension(filename):
 def main(arguments):
     """
     Parses command line arguments and performs the main functionality of the program.
-    Args:
+    Parameters:
         arguments (List[str]): The command line arguments passed to the program.
     Returns:
         None
