@@ -115,6 +115,15 @@ def get_file_name_without_extension(filename):
     """
     return os.path.splitext(filename)[0]
 
+def get_file_path_without_extension(filename):
+    """
+    Extract the file path without its extension.
+    Parameters:
+        filename (str): The path to the file.
+    Returns:
+        str: The file path without the extension.
+    """
+    return os.path.splitext(os.path.basename(filename))[0]
 
 def main(arguments):
     """

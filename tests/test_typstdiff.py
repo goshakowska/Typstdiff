@@ -2,7 +2,7 @@ from typstdiff import __version__
 import pytest
 from typstdiff.file_converter import FileConverter
 from typstdiff.iterating import Comparison
-from typstdiff.main import get_file_name_without_extension
+from typstdiff.main import get_file_path_without_extension
 
 
 pytestmark = [
@@ -26,9 +26,9 @@ def test_typstdiff_version():
 
 
 def perform_jsondiff_on_typst_files(old_version_file, new_version_file, diff_file):
-    old_v_file = get_file_name_without_extension(old_version_file)
-    new_v_file = get_file_name_without_extension(new_version_file)
-    diff_file = get_file_name_without_extension(diff_file)
+    old_v_file = get_file_path_without_extension(old_version_file)
+    new_v_file = get_file_path_without_extension(new_version_file)
+    diff_file = get_file_path_without_extension(diff_file)
 
     file_converter = FileConverter()
     file_converter.convert_with_pandoc('typst', 'json', f'./tests/test_working_types/{old_v_file}/{new_v_file}.typ', f'./tests/test_working_types/{old_v_file}/{new_v_file}.json')
@@ -97,13 +97,13 @@ def test_typstdiff_insert_header(setup_files_insert):
     assert diff_json == expected_json
 
 
-# @pytest.mark.parametrize('setup_files_update', ['link'], indirect=True)
-# @pytest.mark.update
-# def test_typstdiff_update_link(setup_files_update):
-#     old_version_file, new_version_file, diff_file = setup_files_update
-#     diff_json = perform_jsondiff_on_typst_files(old_version_file, new_version_file, diff_file)
-#     expected_json = {"pandoc-api-version":[1,23,1],"meta":{},"blocks":[{"t":"Para","c":[{"t":"Strikeout","c":[{"t":"Link","c":[["",[],[]],[{"t":"Str","c":"https://typst.app/"}],["https://typst.app/",""]]}]},{"t":"SoftBreak"},{"t":"Underline","c":[{"t":"Link","c":[["",[],[]],[{"t":"Str","c":"https://typst.app/docs/"}],["https://typst.app/docs/",""]]}]},{"t":"Link","c":[["",[],[]],[{"t":"Str","c":"https://pl.wikipedia.org/"}],["https://pl.wikipedia.org/",""]]}]}]}
-#     assert diff_json == expected_json
+@pytest.mark.parametrize('setup_files_update', ['link'], indirect=True)
+@pytest.mark.update
+def test_typstdiff_update_link(setup_files_update):
+    old_version_file, new_version_file, diff_file = setup_files_update
+    diff_json = perform_jsondiff_on_typst_files(old_version_file, new_version_file, diff_file)
+    expected_json = {"pandoc-api-version":[1,23,1],"meta":{},"blocks":[{"t":"Para","c":[{"t":"Strikeout","c":[{"t":"Link","c":[["",[],[]],[{"t":"Str","c":"https://typst.app/"}],["https://typst.app/",""]]}]},{"t":"Underline","c":[{"t":"Link","c":[["",[],[]],[{"t":"Str","c":"https://typst.app/docs/"}],["https://typst.app/docs/",""]]}]},{"t": "SoftBreak"},{"t":"Link","c":[["",[],[]],[{"t":"Str","c":"https://pl.wikipedia.org/"}],["https://pl.wikipedia.org/",""]]}]}]}
+    assert diff_json == expected_json
 
 
 
