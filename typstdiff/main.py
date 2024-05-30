@@ -3,29 +3,29 @@ import argparse
 import os
 
 from typstdiff.file_converter import FileConverter
-from typstdiff.iterating import Comparison
+from typstdiff.comparison import Comparison
 
 # Define the possible customizations
 
 typst_predefined_colors = {
-    ('bl', 'black', 'luma0'): 'black',
-    ('ga', 'gray', 'luma170'): 'gray',
-    ('si', 'silver', 'luma221'): 'silver',
-    ('wh', 'white', 'luma255'): 'white',
-    ('na', 'navy', '#001f3f'): 'navy',
-    ('bu', 'blue', '#0074d9'): 'blue',
-    ('aq', 'aqua', '#7fdbff'): 'aqua',
-    ('te', 'teal', '#39cccc'): 'teal',
-    ('ea', 'eastern', '#239dad'): 'eastern',
-    ('pu', 'purple', '#b10dc9'): 'purple',
-    ('fu', 'fuchsia', '#f012be'): 'fuchsia',
-    ('ma', 'maroon', '#85144b'): 'maroon',
-    ('re', 'red', '#ff4136'): 'red',
-    ('or', 'orange', '#ff851b'): 'orange',
-    ('ye', 'yellow', '#ffdc00'): 'yellow',
-    ('ol', 'olive', '#3d9970'): 'olive',
-    ('gr', 'green', '#2ecc40'): 'green',
-    ('li', 'lime', '#01ff70'): 'lime'
+    ("bl", "black", "luma0"): "black",
+    ("ga", "gray", "luma170"): "gray",
+    ("si", "silver", "luma221"): "silver",
+    ("wh", "white", "luma255"): "white",
+    ("na", "navy", "#001f3f"): "navy",
+    ("bu", "blue", "#0074d9"): "blue",
+    ("aq", "aqua", "#7fdbff"): "aqua",
+    ("te", "teal", "#39cccc"): "teal",
+    ("ea", "eastern", "#239dad"): "eastern",
+    ("pu", "purple", "#b10dc9"): "purple",
+    ("fu", "fuchsia", "#f012be"): "fuchsia",
+    ("ma", "maroon", "#85144b"): "maroon",
+    ("re", "red", "#ff4136"): "red",
+    ("or", "orange", "#ff851b"): "orange",
+    ("ye", "yellow", "#ffdc00"): "yellow",
+    ("ol", "olive", "#3d9970"): "olive",
+    ("gr", "green", "#2ecc40"): "green",
+    ("li", "lime", "#01ff70"): "lime",
 }
 
 
@@ -37,7 +37,11 @@ def isValidHexaCode(hex_string):
     Returns:
         bool: True if the string is a valid hexadecimal color code, False otherwise.
     """
-    if hex_string.startswith('#') and (len(hex_string) in {4, 7}) and all(c in '0123456789abcdefABCDEF' for c in hex_string[1:]):
+    if (
+        hex_string.startswith("#")
+        and (len(hex_string) in {4, 7})
+        and all(c in "0123456789abcdefABCDEF" for c in hex_string[1:])
+    ):
         return True
     return False
 
@@ -76,12 +80,16 @@ def format_styles(custom_setting):
     delete_font = parse_color_param(custom_setting.delete_font)
 
     if insert_highlight:
-        format_lines.append(f"#show underline : it => {{highlight(fill: {insert_highlight}, text({insert_font or 'black'}, it))}}")
+        format_lines.append(
+            f"#show underline : it => {{highlight(fill: {insert_highlight}, text({insert_font or 'black'}, it))}}"
+        )
     elif insert_font:
         format_lines.append(f"#show underline : it => {{text({insert_font}, it)}}")
 
     if delete_highlight:
-        format_lines.append(f"#show strike : it => {{highlight(fill: {delete_highlight}, text({delete_font or 'black'}, it))}}")
+        format_lines.append(
+            f"#show strike : it => {{highlight(fill: {delete_highlight}, text({delete_font or 'black'}, it))}}"
+        )
     elif delete_font:
         format_lines.append(f"#show strike : it => {{text({delete_font}, it)}}")
 
@@ -98,8 +106,10 @@ def check_if_typst_extension(filename):
     Raises:
         argparse.ArgumentTypeError: If the filename does not have a .typ extension or if it does not exist.
     """
-    if not filename.lower().endswith('.typ'):
-        raise argparse.ArgumentTypeError(f"File '{filename}' does not have a .typ extension")
+    if not filename.lower().endswith(".typ"):
+        raise argparse.ArgumentTypeError(
+            f"File '{filename}' does not have a .typ extension"
+        )
     if not os.path.isfile(filename):
         raise argparse.ArgumentTypeError(f"File '{filename}' does not exist")
     return True
@@ -115,6 +125,7 @@ def get_file_name_without_extension(filename):
     """
     return os.path.splitext(filename)[0]
 
+
 def get_file_path_without_extension(filename):
     """
     Extract the file path without its extension.
@@ -124,6 +135,7 @@ def get_file_path_without_extension(filename):
         str: The file path without the extension.
     """
     return os.path.splitext(os.path.basename(filename))[0]
+
 
 def main(arguments):
     """
@@ -136,42 +148,90 @@ def main(arguments):
         SystemExit: If the user provides invalid command line arguments.
     """
     parser = argparse.ArgumentParser(
-        prog='TypstDiff',
+        prog="TypstDiff",
         description="Mark differences between two Typst files.",
-        epilog="Copyright (c) 2024, Dominika Ferfecka, Sara Fojt, Małgorzata Kozłowska"
+        epilog="Copyright (c) 2024, Dominika Ferfecka, Sara Fojt, Małgorzata Kozłowska",
     )
 
-    parser.add_argument('old_version', type=str, help="Path to old version of Typst file")
-    parser.add_argument('new_version', type=str, help="Path to new version of Typst file")
-    parser.add_argument('diff_output_file', type=str, help="Path to output diff file")
+    parser.add_argument(
+        "old_version", type=str, help="Path to old version of Typst file"
+    )
+    parser.add_argument(
+        "new_version", type=str, help="Path to new version of Typst file"
+    )
+    parser.add_argument("diff_output_file", type=str, help="Path to output diff file")
 
     group = parser.add_mutually_exclusive_group()
-    group.add_argument('-ins', '--only-inserted', help="Only show inserted changes to new Typst file", action='store_true')
-    group.add_argument('-del', '--only-deleted', help="Only show deleted changes to new Typst file", action='store_true')
+    group.add_argument(
+        "-ins",
+        "--only-inserted",
+        help="Only show inserted changes to new Typst file",
+        action="store_true",
+    )
+    group.add_argument(
+        "-del",
+        "--only-deleted",
+        help="Only show deleted changes to new Typst file",
+        action="store_true",
+    )
 
-    parser.add_argument('-ih', '--insert-highlight', help="Set custom highlight to inserted changes", type=str, default='')
-    parser.add_argument('-if', '--insert-font', help="Set custom font to inserted changes", type=str, default='')
-    parser.add_argument('-dh', '--delete-highlight', help="Set custom highlight to deleted changes", type=str, default='')
-    parser.add_argument('-df', '--delete-font', help="Set custom font to deleted changes", type=str, default='')
+    parser.add_argument(
+        "-ih",
+        "--insert-highlight",
+        help="Set custom highlight to inserted changes",
+        type=str,
+        default="",
+    )
+    parser.add_argument(
+        "-if",
+        "--insert-font",
+        help="Set custom font to inserted changes",
+        type=str,
+        default="",
+    )
+    parser.add_argument(
+        "-dh",
+        "--delete-highlight",
+        help="Set custom highlight to deleted changes",
+        type=str,
+        default="",
+    )
+    parser.add_argument(
+        "-df",
+        "--delete-font",
+        help="Set custom font to deleted changes",
+        type=str,
+        default="",
+    )
 
     args = parser.parse_args(arguments[1:])
 
-    for arg_name in ['old_version', 'new_version']:
+    for arg_name in ["old_version", "new_version"]:
         check_if_typst_extension(getattr(args, arg_name))
-        setattr(args, arg_name, get_file_name_without_extension(getattr(args, arg_name)))
+        setattr(
+            args, arg_name, get_file_name_without_extension(getattr(args, arg_name))
+        )
 
     if args.only_inserted and (args.delete_highlight or args.delete_font):
-        print("Can't use --only-inserted functionality and customize --delete-highlight or --delete-font simultaneously.")
+        print(
+            "Can't use --only-inserted functionality and customize --delete-highlight or --delete-font simultaneously."
+        )
 
     if args.only_deleted and (args.insert_highlight or args.insert_font):
-        print("Can't use --only-deleted functionality and customize --insert-highlight or --insert-font simultaneously.")
+        print(
+            "Can't use --only-deleted functionality and customize --insert-highlight or --insert-font simultaneously."
+        )
 
     format_lines = format_styles(args)
 
     file_converter = FileConverter()
-    file_converter.convert_with_pandoc('typst', 'json', f'{args.new_version}.typ', f'{args.new_version}.json')
-    file_converter.convert_with_pandoc('typst', 'json', f'{args.old_version}.typ', f'{args.old_version}.json')
-    comparison = Comparison(f'{args.new_version}.json', f'{args.old_version}.json')
+    file_converter.convert_with_pandoc(
+        "typst", "json", f"{args.new_version}.typ", f"{args.new_version}.json"
+    )
+    file_converter.convert_with_pandoc(
+        "typst", "json", f"{args.old_version}.typ", f"{args.old_version}.json"
+    )
+    comparison = Comparison(f"{args.new_version}.json", f"{args.old_version}.json")
 
     # Handle the optional parameters - TODO ?
     if args.only_inserted:
@@ -181,10 +241,14 @@ def main(arguments):
 
     comparison.parse()
     print(comparison.parsed_new_file)
-    file_converter.write_to_json_file(comparison.parsed_changed_file, f'{args.diff_output_file}.json')
-    file_converter.convert_with_pandoc('json', 'typst', f'{args.diff_output_file}.json', f'{args.diff_output_file}.typ')
-    file_converter.write_lines(format_lines, f'{args.diff_output_file}.typ')
-    file_converter.compile_to_pdf(f'{args.diff_output_file}.typ')
+    file_converter.write_to_json_file(
+        comparison.parsed_changed_file, f"{args.diff_output_file}.json"
+    )
+    file_converter.convert_with_pandoc(
+        "json", "typst", f"{args.diff_output_file}.json", f"{args.diff_output_file}.typ"
+    )
+    file_converter.write_lines(format_lines, f"{args.diff_output_file}.typ")
+    file_converter.compile_to_pdf(f"{args.diff_output_file}.typ")
 
 
 if __name__ == "__main__":

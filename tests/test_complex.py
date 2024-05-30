@@ -1,9 +1,7 @@
-from typstdiff import __version__
 import pytest
 from typstdiff.file_converter import FileConverter
-from typstdiff.iterating import Comparison
+from typstdiff.comparison import Comparison
 from typstdiff.main import get_file_path_without_extension
-# from tests.test_complex import pytestmark
 import json
 
 # ------------------------------------------------------------
