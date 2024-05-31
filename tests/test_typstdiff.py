@@ -1,7 +1,7 @@
 from typstdiff import __version__
 import pytest
 from typstdiff.file_converter import FileConverter
-from typstdiff.iterating import Comparison
+from typstdiff.comparison import Comparison
 from typstdiff.main import get_file_path_without_extension
 
 
@@ -14,16 +14,6 @@ pytestmark = [
 
 def test_typstdiff_version():
     assert __version__ == '0.1.0'
-
-
-# def is_all_marked(element, styling):
-#     if isinstance(element, dict):
-#         if element.get('t') == styling:
-#             return True
-#         elif element.get('t') == 'Header' and 'c' in element:
-#             return all(is_all_marked(sub_element, styling) for sub_element in element['c'][2])
-#     return False
-
 
 def perform_jsondiff_on_typst_files(old_version_file, new_version_file, diff_file):
     old_v_file = get_file_path_without_extension(old_version_file)
