@@ -105,15 +105,14 @@ veniam, quis nostrud exercitation ullamco laboris nisi
 This is Typst‘s documentation. It #strike[explains];#underline[CHANGED]
 Typst.
 
-#underline[Sum];#underline[ ];#underline[is];#underline[
-];#underline[\5.]
+#underline[Sum];#underline[ ];#underline[is];#underline[ ];#underline[5.]
 
 Sum is 5.
 
 The #strike[coordinates];#underline[CHANGED] are 1, 2.
 
 The #strike[first];#underline[CHANGED] element is
-#strike[\1.];#underline[\5.] The last element is 4.
+#strike[1.];#underline[5.] The last element is 4.
 
 #underline[Austen];#underline[ ];#underline[wrote];#underline[
 ];#underline[Persuasion.]
