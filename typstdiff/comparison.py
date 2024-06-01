@@ -178,7 +178,7 @@ class Comparison:
 
     def dict_depth(self, d, level=1):
         """
-        Calculates the depth of a dictionary.
+        Calculates the depth of a dictionary of differences.
         Parameters:
             d (dict): The dictionary to calculate depth for.
             level (int): The current level of recursion.
@@ -192,7 +192,7 @@ class Comparison:
     def update_index(self, diffs):
         """
         Updates the indices in the differences dictionary
-        to account for changes.
+        to account for changes, if they were made before position.
         Parameters:
             diffs: The dictionary of differences.
         Returns:
@@ -315,7 +315,7 @@ class Comparison:
 
     def split_index_tuple(self, index):
         """
-        Splits the index tuple into two values.
+        Splits the index tuple into two values. There is value of basic index and value of index updated after adding elements before current element.
         Parameters:
             index (int or tuple): The index or index tuple.
         Returns:
@@ -372,7 +372,7 @@ class Comparison:
         self, diffs, target, parsed_old_file, parsed_new_file, current_action, only
     ):
         """
-        Processes updates in the JSON structure based on
+        Processes inserts and deletes in the JSON structure based on
         the differences dictionary.
         Parameters:
             diffs: The dictionary of differences.
@@ -440,7 +440,7 @@ class Comparison:
 
     def update_insert_indexes(self, diffs):
         """
-        Updates the indexes for insertions in the differences dictionary.
+        Updates the indexes for insertions in the differences dictionary based on deleted elements in the same structure.
         Parameters:
             diffs (dict): The dictionary of differences.
         Returns:
@@ -473,7 +473,7 @@ class Comparison:
 
     def sort_diffs(self, diffs):
         """
-        Sorts the differences dictionary.
+        Sorts the differences dictionary, so that insert and delete operations are before update operation.
         Parameters:
             diffs (dict): The dictionary of differences.
         Returns:
@@ -525,6 +525,17 @@ class Comparison:
             self.process_delete(diffs, target, parsed_old_file, parsed_new_file)
 
     def remove_formatting(self, data, formatting):
+        """
+        Removes formatting from changed structure 
+        so that it can be added to opposite operation file handler. 
+        The reason is that jsondiff will not find 
+        differences after they were processed.
+        Parameters:
+            data (dict): dictionary with changed element with marked differences
+            formatting (str): name of marking to remove
+        Returns:
+            data (dict): dictionary without marking
+        """
         if isinstance(data, dict):
             if data.get("t") == formatting:
                 return data.get("c")[0]
