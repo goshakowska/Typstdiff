@@ -1,5 +1,73 @@
 # Project Configuration and Developer How-To
 
+### Tools that were used in project development & their configuration, which might be useful to understand for any future contributors.
+---
+## Justfile
+
+the easiest way for running unit tests, automated _Tox_ environments' tests, building package and documentation is by running `just` commands, which are defined in the Typstdiff package's Justfile:
+```
+# Justfile
+
+
+install-deps:
+    if [ -x "$(command -v poetry)" ]; then \
+        poetry install; \
+    else \
+        pip install -r requirements.txt; \
+    fi
+
+
+test:
+    if [ -x "$(command -v poetry)" ]; then \
+        poetry run tox; \
+    else \
+        tox; \
+    fi
+
+
+format:
+    if [ -x "$(command -v poetry)" ]; then \
+        poetry run black src tests; \
+    else \
+        black src tests; \
+    fi
+
+
+docs:
+    if [ -x "$(command -v poetry)" ]; then \
+        cd documentation/ && poetry run mkdocs build; \
+    else \
+        cd documentation/ && mkdocs build; \
+    fi
+
+
+serve-docs:
+    if [ -x "$(command -v poetry)" ]; then \
+        cd documentation/ && poetry run mkdocs serve; \
+    else \
+        cd documentation/ && mkdocs serve; \
+    fi
+
+
+clean:
+    rm -rf .tox .pytest_cache dist
+
+
+build:
+    if [ -x "$(command -v poetry)" ]; then \
+        poetry build; \
+    else \
+        pip wheel . -w dist; \
+    fi
+
+```
+Example command: `just install-deps`.
+
+
+To be able to do that, the developer must meet the prerequisites, mentioned in the tool's repository README and download the package through provided commands (for the package manager of their choice): [Just Repository - installation](https://github.com/casey/just?tab=readme-ov-file#packages).
+
+
+---
 ## Tox
 Install tox using the pip package manager:
 ```
@@ -10,7 +78,7 @@ Create a tox.ini configuration file inside the main project directory:
 [tox]
 requires =
     tox>=4
-env_list = lint, type, py{38,39,310,311}
+env_list = lint, type, py310, py311
 
 [testenv]
 description = run unit tests
@@ -24,15 +92,9 @@ commands =
 description = run linters
 skip_install = true
 deps =
-    black==22.12
-commands = black {posargs:.}
-
-[testenv:type]
-description = run type checks
-deps =
-    mypy>=0.991
+    black==24.4.2
 commands =
-    mypy {posargs:src tests}
+    black {posargs:.}
 ```
 - [*tox*] - global settings
 - [*testenv*] - settings for a specific test
@@ -42,6 +104,22 @@ commands =
 - *deps* - required dependencies to run the test
 - *commands* - commands to be executed as part of the test
 
+In order to run all the tests for the Typstdiff package, format code using Black and test the package on different python interpreters / environments automatically, in terminal, within the main directory of the package, the `tox` command should be run.
+
+Result, after running the aforementioned command:
+
+```
+  lint: OK (0.33=setup[0.04]+cmd[0.29] seconds)
+  type: OK (25.02=setup[2.82]+cmd[22.20] seconds)
+  py310: OK (22.50=setup[2.70]+cmd[19.80] seconds)
+  py311: OK (23.68=setup[2.24]+cmd[21.44] seconds)
+  congratulations :) (71.60 seconds)
+```
+---
+## Testing
+Package was tested via _pytest_ unit tests. Each of the .typst types, that are supported by the Typstdiff tool were tested in order to see if the changes (insertion, deletion, update) are marked appropriately in the output file. Aside from that complex files were tested - despite their higher complexity in structure the Typstdiff tool's performance did not worsened.
+The tests are parameterized and they use pytest's @fixtures and @marks, in order to make the testing process more efficient.
+---
 ## MkDocs
 A tool used for creating project documentation.
 
@@ -77,13 +155,32 @@ INFO    -  [HH:MM:SS] Watching paths for changes: 'docs', 'mkdocs.yml'
 INFO    -  [HH:MM:SS] Serving on http://127.0.0.1:8000/
 ```
 
-## Virtual Environment
+---
+## Poetry - tool for dependency management and packaging in Python
 
-TODO (or not)
+In order to install poetry You need to follow the steps below:
 
-## Building and Deploying Packages
-TODO (or not)
+### Prerequisite
 
+Install pipx: 
+
+If You don't have `pipx` installed, follow the information in the [official pipx installation instructions](https://pipx.pypa.io/stable/installation/).
+
+Pipx is used to install Python CLI applications globally while still isolating them in virtual environments. It will manage upgrades and uninstalls when used to install Poetry.
+
+### Installation process
+
+With pipx install Poetry:
+
+
+```pipx install poetry```
+
+This is the simplest way to install Poetry tool.
+
+For more information follow the link to the official _poetry_ documentation and user guide:
+[Poetry Introduction](https://python-poetry.org/docs/).
+
+---
 ## Code Convention
 
 Naming conventions follow PEP8 standard:
@@ -274,7 +371,7 @@ Recommended *assigning values* to parameters within *function definition*:
 def munge(sep: AnyStr = None): ...
 def munge(input: AnyStr, sep: AnyStr = None, limit=1000): ...
 ```
-Niezalecane:
+Not recommended:
 ```
 def munge(input: AnyStr=None): ...
 def munge(input: AnyStr, limit = 1000): ...
