@@ -5,3 +5,4 @@
 /tests/test_working_types/*/*.json
 /tests/test_complex/*/*.json
 /tests/test_complex/*/*.pdf
+!/tests/test_complex/*/*_expected.json

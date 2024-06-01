@@ -1,0 +1,1723 @@
+{
+    "pandoc-api-version": [
+        1,
+        23,
+        1
+    ],
+    "meta": {},
+    "blocks": [
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "ZMIANY"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "NA"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "HEADERZE"
+                }
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                1,
+                [
+                    "",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Str",
+                        "c": "Introduction"
+                    },
+                    {
+                        "t": "Space"
+                    },
+                    {
+                        "t": "Strikeout",
+                        "c": [
+                            {
+                                "t": "Str",
+                                "c": "niezmieniony"
+                            }
+                        ]
+                    },
+                    {
+                        "t": "Underline",
+                        "c": [
+                            {
+                                "t": "Str",
+                                "c": "zmeniony"
+                            }
+                        ]
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "Header",
+            "c": [
+                1,
+                [
+                    "",
+                    [],
+                    []
+                ],
+                [
+                    {
+                        "t": "Underline",
+                        "c": [
+                            {
+                                "t": "Str",
+                                "c": "Dodany"
+                            }
+                        ]
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "ZMIANY"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "NA"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "PARAGRAFIE"
+                },
+                {
+                    "t": "LineBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "In"
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Space"
+                        }
+                    ]
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "this"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "report,"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "eport,"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "we"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "will"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "explore"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "the"
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "various"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "factors"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "that"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "that"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "influence"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "influence"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "fluid"
+                        }
+                    ]
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Space"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "SoftBreak"
+                        }
+                    ]
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Emph",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "fluid"
+                                },
+                                {
+                                    "t": "SoftBreak"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "dynamics"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "dynamics"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "in"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "glaciers"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "and"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Strikeout",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "hZMIANA"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Underline",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "how"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "they"
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "contribute"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "to"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "the"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "formation"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "and"
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "behaviour"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "of"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "these"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "natural"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "structures."
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "ZMIANY"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "NA"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "LISTACH"
+                }
+            ]
+        },
+        {
+            "t": "OrderedList",
+            "c": [
+                [
+                    1,
+                    {
+                        "t": "DefaultStyle"
+                    },
+                    {
+                        "t": "DefaultDelim"
+                    }
+                ],
+                [
+                    [
+                        {
+                            "t": "Para",
+                            "c": [
+                                {
+                                    "t": "Underline",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "The"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "Underline",
+                                    "c": [
+                                        {
+                                            "t": "Space"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "Underline",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "climate"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    [
+                        {
+                            "t": "Para",
+                            "c": [
+                                {
+                                    "t": "Strikeout",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "The"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "Strikeout",
+                                    "c": [
+                                        {
+                                            "t": "Space"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "Strikeout",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "climate"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "Underline",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "Dodany"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "t": "BulletList",
+                            "c": [
+                                [
+                                    {
+                                        "t": "Para",
+                                        "c": [
+                                            {
+                                                "t": "Str",
+                                                "c": "Temperature"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                [
+                                    {
+                                        "t": "Para",
+                                        "c": [
+                                            {
+                                                "t": "Strikeout",
+                                                "c": [
+                                                    {
+                                                        "t": "Str",
+                                                        "c": "Precipitation"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            ]
+                        }
+                    ],
+                    [
+                        {
+                            "t": "Para",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "The"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Strikeout",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "topograpZMIANA"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "Underline",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "topography"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    [
+                        {
+                            "t": "Para",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "The"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "geology"
+                                }
+                            ]
+                        }
+                    ],
+                    [
+                        {
+                            "t": "Para",
+                            "c": [
+                                {
+                                    "t": "Underline",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "Nowy"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                ]
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "ZMIANY"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "NA"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "MATEMATYCE"
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Math",
+                            "c": [
+                                {
+                                    "t": "DisplayMath"
+                                },
+                                "Q = \\rho Av + C"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Math",
+                            "c": [
+                                {
+                                    "t": "DisplayMath"
+                                },
+                                "Q = \\rho Av + A"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Math",
+                            "c": [
+                                {
+                                    "t": "DisplayMath"
+                                },
+                                "Q = \\rho Av + \\text{ time offset }"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Math",
+                            "c": [
+                                {
+                                    "t": "DisplayMath"
+                                },
+                                "7.32\\beta + \\sum_{i = 0}^{\\nabla}\\frac{Q_{i}\\left( a_{i} - \\varepsilon \\right)}{2}"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Math",
+                            "c": [
+                                {
+                                    "t": "DisplayMath"
+                                },
+                                "7.32\\beta + \\sum_{i = 0}^{\\nabla}\\frac{Q_{i}\\left( a_{i} - \\varepsilon \\right)}{3}"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "ZMIANY"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "NA"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "FIGURACH"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "ZE"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "ZDJ\u0118CIEM"
+                }
+            ]
+        },
+        {
+            "t": "Figure",
+            "c": [
+                [
+                    "",
+                    [],
+                    []
+                ],
+                [
+                    null,
+                    [
+                        {
+                            "t": "Para",
+                            "c": [
+                                {
+                                    "t": "Emph",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "Dog"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "form"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "an"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "important"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Strikeout",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "partZMIANA"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "Underline",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "part"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "SoftBreak"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "of"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "the"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "earth\u2019s"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "climate"
+                                },
+                                {
+                                    "t": "Space"
+                                },
+                                {
+                                    "t": "Str",
+                                    "c": "system."
+                                },
+                                {
+                                    "t": "Underline",
+                                    "c": [
+                                        {
+                                            "t": "Space"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "t": "Underline",
+                                    "c": [
+                                        {
+                                            "t": "Str",
+                                            "c": "DODANE"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                ],
+                [
+                    {
+                        "t": "Para",
+                        "c": [
+                            {
+                                "t": "Strikeout",
+                                "c": [
+                                    {
+                                        "t": "Image",
+                                        "c": [
+                                            [
+                                                "",
+                                                [],
+                                                [
+                                                    [
+                                                        "width",
+                                                        "20%"
+                                                    ]
+                                                ]
+                                            ],
+                                            [],
+                                            [
+                                                "doggo.jpeg",
+                                                ""
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "t": "Underline",
+                                "c": [
+                                    {
+                                        "t": "Image",
+                                        "c": [
+                                            [
+                                                "",
+                                                [],
+                                                [
+                                                    [
+                                                        "width",
+                                                        "30%"
+                                                    ]
+                                                ]
+                                            ],
+                                            [],
+                                            [
+                                                "doggo.jpeg",
+                                                ""
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "ZMIANY"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "NA"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "FUNKCJACH"
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "This"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "is"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "Typst\u2018s"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "documentation."
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "It"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "explains"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "CHANGED"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "Typst."
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "This"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "report"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "rep"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "is"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "embedded"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "in"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "the"
+                }
+            ]
+        },
+        {
+            "t": "Div",
+            "c": [
+                [
+                    "",
+                    [
+                        "box"
+                    ],
+                    []
+                ],
+                [
+                    {
+                        "t": "Para",
+                        "c": [
+                            {
+                                "t": "Span",
+                                "c": [
+                                    [
+                                        "",
+                                        [
+                                            "box"
+                                        ],
+                                        []
+                                    ],
+                                    [
+                                        {
+                                            "t": "Strikeout",
+                                            "c": [
+                                                {
+                                                    "t": "Image",
+                                                    "c": [
+                                                        [
+                                                            "",
+                                                            [],
+                                                            [
+                                                                [
+                                                                    "height",
+                                                                    "0.7em"
+                                                                ]
+                                                            ]
+                                                        ],
+                                                        [],
+                                                        [
+                                                            "doggo.jpeg",
+                                                            ""
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "t": "Underline",
+                                            "c": [
+                                                {
+                                                    "t": "Image",
+                                                    "c": [
+                                                        [
+                                                            "",
+                                                            [],
+                                                            [
+                                                                [
+                                                                    "height",
+                                                                    "0.9em"
+                                                                ]
+                                                            ]
+                                                        ],
+                                                        [],
+                                                        [
+                                                            "doggo.jpeg",
+                                                            ""
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                ]
+                            },
+                            {
+                                "t": "SoftBreak"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "ArtosFlow"
+                            }
+                        ]
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "project."
+                }
+            ]
+        },
+        {
+            "t": "Div",
+            "c": [
+                [
+                    "",
+                    [
+                        "box"
+                    ],
+                    []
+                ],
+                [
+                    {
+                        "t": "Para",
+                        "c": [
+                            {
+                                "t": "Span",
+                                "c": [
+                                    [
+                                        "",
+                                        [
+                                            "box"
+                                        ],
+                                        []
+                                    ],
+                                    [
+                                        {
+                                            "t": "Strikeout",
+                                            "c": [
+                                                {
+                                                    "t": "Image",
+                                                    "c": [
+                                                        [
+                                                            "",
+                                                            [],
+                                                            [
+                                                                [
+                                                                    "height",
+                                                                    "0.7em"
+                                                                ]
+                                                            ]
+                                                        ],
+                                                        [],
+                                                        [
+                                                            "doggo.jpeg",
+                                                            ""
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "t": "Underline",
+                                            "c": [
+                                                {
+                                                    "t": "Image",
+                                                    "c": [
+                                                        [
+                                                            "",
+                                                            [],
+                                                            [
+                                                                [
+                                                                    "height",
+                                                                    "0.9em"
+                                                                ]
+                                                            ]
+                                                        ],
+                                                        [],
+                                                        [
+                                                            "doggo.jpeg",
+                                                            ""
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                ]
+                            },
+                            {
+                                "t": "SoftBreak"
+                            },
+                            {
+                                "t": "Str",
+                                "c": "ArtosFlow"
+                            }
+                        ]
+                    }
+                ]
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "is"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "a"
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "project"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "of"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "the"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "Artos"
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Space"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "DODANE"
+                        }
+                    ]
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "Institute."
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "ZMIANY"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "NA"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "LINKACH"
+                },
+                {
+                    "t": "LineBreak"
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Link",
+                            "c": [
+                                [
+                                    "",
+                                    [],
+                                    []
+                                ],
+                                [
+                                    {
+                                        "t": "Str",
+                                        "c": "https://typst.app/docs"
+                                    }
+                                ],
+                                [
+                                    "https://typst.app/docs",
+                                    ""
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "SoftBreak"
+                        }
+                    ]
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Link",
+                            "c": [
+                                [
+                                    "",
+                                    [],
+                                    []
+                                ],
+                                [
+                                    {
+                                        "t": "Str",
+                                        "c": "https://typst.app/"
+                                    }
+                                ],
+                                [
+                                    "https://typst.app/",
+                                    ""
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Link",
+                            "c": [
+                                [
+                                    "",
+                                    [],
+                                    []
+                                ],
+                                [
+                                    {
+                                        "t": "Str",
+                                        "c": "https://google.com"
+                                    }
+                                ],
+                                [
+                                    "https://google.com",
+                                    ""
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "Number:"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "3"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "6"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "let"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "name"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "="
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "["
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Underline",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "Typst"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Underline",
+                            "c": [
+                                {
+                                    "t": "Space"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Strikeout",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "Typst!"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Underline",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "NEW!"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "t": "Str",
+                    "c": "]"
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Str",
+                    "c": "ZMIANY"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "NA"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "TEK\u015aCIE"
+                },
+                {
+                    "t": "SoftBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "abc"
+                },
+                {
+                    "t": "LineBreak"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Strikeout",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "my"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Strikeout",
+                            "c": [
+                                {
+                                    "t": "Space"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Strikeout",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "t": "Underline",
+                            "c": [
+                                {
+                                    "t": "Str",
+                                    "c": "changed"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "t": "LineBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "already"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "low"
+                }
+            ]
+        },
+        {
+            "t": "Para",
+            "c": [
+                {
+                    "t": "Strikeout",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "ABC"
+                        }
+                    ]
+                },
+                {
+                    "t": "Underline",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "CHANGED"
+                        }
+                    ]
+                },
+                {
+                    "t": "LineBreak"
+                },
+                {
+                    "t": "Strong",
+                    "c": [
+                        {
+                            "t": "Str",
+                            "c": "MY"
+                        },
+                        {
+                            "t": "Space"
+                        },
+                        {
+                            "t": "Str",
+                            "c": "TEXT"
+                        }
+                    ]
+                },
+                {
+                    "t": "LineBreak"
+                },
+                {
+                    "t": "Str",
+                    "c": "ALREADY"
+                },
+                {
+                    "t": "Space"
+                },
+                {
+                    "t": "Str",
+                    "c": "HIGH"
+                }
+            ]
+        }
+    ]
+}

@@ -146,7 +146,7 @@ def get_file_path_without_extension(filename):
     return os.path.splitext(os.path.basename(filename))[0]
 
 
-def main(arguments):
+def main():
     """
     Parses command line arguments and performs the main
     functionality of the program.
@@ -204,7 +204,7 @@ def main(arguments):
         default="",
     )
 
-    args = parser.parse_args(arguments[1:])
+    args = parser.parse_args(sys.argv[1:])
 
     for arg_name in ["old_version", "new_version", "diff_output_file"]:
         check_if_typst_extension(getattr(args, arg_name))
