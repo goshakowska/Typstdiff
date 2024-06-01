@@ -166,12 +166,12 @@ def main(arguments):
     )
 
     parser.add_argument(
-        "old_version", type=str, help="Path to old version of Typst file"
+        "old_version", type=str, help="Path to an old version of Typst file"
     )
     parser.add_argument(
-        "new_version", type=str, help="Path to new version of Typst file"
+        "new_version", type=str, help="Path to a new version of Typst file"
     )
-    parser.add_argument("diff_output_file", type=str, help="Path to output diff file")
+    parser.add_argument("diff_output_file", type=str, help="Path to the output diff file")
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
@@ -218,7 +218,7 @@ def main(arguments):
 
     args = parser.parse_args(arguments[1:])
 
-    for arg_name in ["old_version", "new_version"]:
+    for arg_name in ["old_version", "new_version", "diff_output_file"]:
         check_if_typst_extension(getattr(args, arg_name))
         setattr(
             args, arg_name, get_file_name_without_extension(getattr(args, arg_name))
