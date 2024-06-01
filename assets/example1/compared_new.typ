@@ -3,7 +3,6 @@
 ZMIANY NA HEADERZE
 
 = Introduction #strike[niezmieniony];#underline[zmeniony]
-= #underline[Dodany]
 ZMIANY NA PARAGRAFIE \
 In#strike[ ];#strike[this] #strike[report,];#underline[eport,] we will
 explore the various #strike[factors];#underline[that]
@@ -15,9 +14,7 @@ formation and behaviour of these natural structures.
 
 ZMIANY NA LISTACH
 
-+ #underline[The];#underline[ ];#underline[climate]
-
-+ #strike[The];#strike[ ];#strike[climate];#underline[Dodany]
++ The climate
 
   - Temperature
 
@@ -31,10 +28,6 @@ ZMIANY NA LISTACH
 
 ZMIANY NA MATEMATYCE
 #strike[$ Q = rho A v + C $];#underline[$ Q = rho A v + A $]
-
-#underline[$ Q = rho A v + upright(" time offset ") $]
-
-#strike[$ 7.32 beta + sum_(i = 0)^nabla frac(Q_i (a_i - epsilon), 2) $];#underline[$ 7.32 beta + sum_(i = 0)^nabla frac(Q_i (a_i - epsilon), 3) $]
 
 ZMIANY NA FIGURACH ZE ZDJĘCIEM
 
@@ -69,8 +62,7 @@ ArtosFlow
 is a project of the Artos#underline[ ];#underline[DODANE] Institute.
 
 ZMIANY NA LINKACH \
-#underline[#link("https://typst.app/docs");];#underline[
-];#strike[#link("https://typst.app/");];#underline[#link("https://google.com");]
+#strike[#link("https://typst.app/");];#underline[#link("https://another.app/docs");]
 
 Number: #strike[3];#underline[6]
 

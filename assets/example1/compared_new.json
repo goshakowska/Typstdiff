@@ -68,28 +68,6 @@
             ]
         },
         {
-            "t": "Header",
-            "c": [
-                1,
-                [
-                    "",
-                    [],
-                    []
-                ],
-                [
-                    {
-                        "t": "Underline",
-                        "c": [
-                            {
-                                "t": "Str",
-                                "c": "Dodany"
-                            }
-                        ]
-                    }
-                ]
-            ]
-        },
-        {
             "t": "Para",
             "c": [
                 {
@@ -466,72 +444,15 @@
                             "t": "Para",
                             "c": [
                                 {
-                                    "t": "Underline",
-                                    "c": [
-                                        {
-                                            "t": "Str",
-                                            "c": "The"
-                                        }
-                                    ]
+                                    "t": "Str",
+                                    "c": "The"
                                 },
                                 {
-                                    "t": "Underline",
-                                    "c": [
-                                        {
-                                            "t": "Space"
-                                        }
-                                    ]
+                                    "t": "Space"
                                 },
                                 {
-                                    "t": "Underline",
-                                    "c": [
-                                        {
-                                            "t": "Str",
-                                            "c": "climate"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    [
-                        {
-                            "t": "Para",
-                            "c": [
-                                {
-                                    "t": "Strikeout",
-                                    "c": [
-                                        {
-                                            "t": "Str",
-                                            "c": "The"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "t": "Strikeout",
-                                    "c": [
-                                        {
-                                            "t": "Space"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "t": "Strikeout",
-                                    "c": [
-                                        {
-                                            "t": "Str",
-                                            "c": "climate"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "t": "Underline",
-                                    "c": [
-                                        {
-                                            "t": "Str",
-                                            "c": "Dodany"
-                                        }
-                                    ]
+                                    "t": "Str",
+                                    "c": "climate"
                                 }
                             ]
                         },
@@ -685,58 +606,6 @@
                                     "t": "DisplayMath"
                                 },
                                 "Q = \\rho Av + A"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "t": "Para",
-            "c": [
-                {
-                    "t": "Underline",
-                    "c": [
-                        {
-                            "t": "Math",
-                            "c": [
-                                {
-                                    "t": "DisplayMath"
-                                },
-                                "Q = \\rho Av + \\text{ time offset }"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "t": "Para",
-            "c": [
-                {
-                    "t": "Strikeout",
-                    "c": [
-                        {
-                            "t": "Math",
-                            "c": [
-                                {
-                                    "t": "DisplayMath"
-                                },
-                                "7.32\\beta + \\sum_{i = 0}^{\\nabla}\\frac{Q_{i}\\left( a_{i} - \\varepsilon \\right)}{2}"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "t": "Underline",
-                    "c": [
-                        {
-                            "t": "Math",
-                            "c": [
-                                {
-                                    "t": "DisplayMath"
-                                },
-                                "7.32\\beta + \\sum_{i = 0}^{\\nabla}\\frac{Q_{i}\\left( a_{i} - \\varepsilon \\right)}{3}"
                             ]
                         }
                     ]
@@ -1388,39 +1257,6 @@
                     "t": "LineBreak"
                 },
                 {
-                    "t": "Underline",
-                    "c": [
-                        {
-                            "t": "Link",
-                            "c": [
-                                [
-                                    "",
-                                    [],
-                                    []
-                                ],
-                                [
-                                    {
-                                        "t": "Str",
-                                        "c": "https://typst.app/docs"
-                                    }
-                                ],
-                                [
-                                    "https://typst.app/docs",
-                                    ""
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "t": "Underline",
-                    "c": [
-                        {
-                            "t": "SoftBreak"
-                        }
-                    ]
-                },
-                {
                     "t": "Strikeout",
                     "c": [
                         {
@@ -1459,11 +1295,11 @@
                                 [
                                     {
                                         "t": "Str",
-                                        "c": "https://google.com"
+                                        "c": "https://another.app/docs"
                                     }
                                 ],
                                 [
-                                    "https://google.com",
+                                    "https://another.app/docs",
                                     ""
                                 ]
                             ]

@@ -19,10 +19,6 @@ ZMIANY NA LISTACH
 ZMIANY NA MATEMATYCE
 $ Q = rho A v + C $
 
-$ 7.32 beta +
-  sum_(i=0)^nabla
-    (Q_i (a_i - epsilon)) / 2 $
-
 
 ZMIANY NA FIGURACH ZE ZDJĘCIEM
 #figure(

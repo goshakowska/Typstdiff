@@ -1,6 +1,5 @@
 ZMIANY NA HEADERZE
 = Introduction zmeniony
-= Dodany
 
 ZMIANY NA PARAGRAFIE \
 
@@ -12,7 +11,6 @@ behaviour of these natural structures.
 
 ZMIANY NA LISTACH
 + The climate
-+ Dodany
   - Temperature
 + The topography
 + The geology
@@ -20,12 +18,6 @@ ZMIANY NA LISTACH
 
 ZMIANY NA MATEMATYCE
 $ Q = rho A v + A $
-
-$ Q = rho A v + "time offset" $
-
-$ 7.32 beta +
-  sum_(i=0)^nabla
-    (Q_i (a_i - epsilon)) / 3 $
 
 
 ZMIANY NA FIGURACH ZE ZDJĘCIEM
@@ -57,8 +49,7 @@ project of the Artos DODANE Institute.
 
 
 ZMIANY NA LINKACH \
-https://typst.app/docs
-https://google.com
+https://another.app/docs
 
 
 /* MODES */
