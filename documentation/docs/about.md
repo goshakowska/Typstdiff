@@ -10,7 +10,7 @@ TypstDiff marks:
 * **updates** - adding old version of element to output file with strikeout and extra formating and new version of element to output file with underlining and extra formating from user.
 
 Due to Typst tool being relatively new our project does not support some
-particular features and elements of Typst documents. List of unnsupported
+particular features and elements of Typst documents. List of supported
 elements can be found on this page.
 
 ## TypstDiff processing
@@ -20,3 +20,28 @@ In the process of checking files for changes TypstDiff uses three main tools:
     - Pandoc started supporting Typst extention only recently so a lot of features and typst elements are not converted properly - this is the reason for most of restriction in our tool. With newer versions of Pandoc, TypstDiff will probably also support more and more Typst features.
 * **jsondiff** - for finding changes in both files
     - in some cases jsondiff marks changes in hard to predict way. For example adding element to the first element of a list will be marked as updating all elements till the last one, and last one will be marked as inserted. You must take this into consideration while using TypstDiff.
+
+
+## Some types of typst structures supported by TypstDiff for now
+
+* bullet_list
+* code
+* display_math
+* emph
+* header
+* inline_math
+* line_break
+* link
+* ordered_list
+* quoted
+* space
+* str
+* strong
+* sub_script
+* super_script
+* image
+* quote
+* cite
+* para
+* div
+* math
