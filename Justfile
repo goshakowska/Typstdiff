@@ -1,38 +1,53 @@
 # Justfile
 
-
-# Task to install dependencies using Poetry
+# Task to install dependencies using Poetry or pip
 install-deps:
-    poetry install
+    if [ -x "$(command -v poetry)" ]; then \
+        poetry install; \
+    else \
+        pip install -r requirements.txt; \
+    fi
 
-# Task to run tests using tox
+# Task to run tests using tox or directly with pytest
 test:
-    poetry run tox
+    if [ -x "$(command -v poetry)" ]; then \
+        poetry run tox; \
+    else \
+        tox; \
+    fi
 
-# Task to format all of the code in the package
+# Task to format all of the code in the package using black
 format:
-    poetry run black
-
-# Task to format the tests using black linter
-format_code:
-    poetry run black src tests
-
-# Task to format the source code using black linter
-format_tests:
-    poetry run black tests
+    if [ -x "$(command -v poetry)" ]; then \
+        poetry run black src tests; \
+    else \
+        black src tests; \
+    fi
 
 # Task to build the documentation using MkDocs
 docs:
-    cd documentation/ && poetry run mkdocs build
+    if [ -x "$(command -v poetry)" ]; then \
+        cd documentation/ && poetry run mkdocs build; \
+    else \
+        cd documentation/ && mkdocs build; \
+    fi
 
 # Task to serve the documentation locally
 serve-docs:
-    cd documentation/ && poetry run mkdocs serve
+    if [ -x "$(command -v poetry)" ]; then \
+        cd documentation/ && poetry run mkdocs serve; \
+    else \
+        cd documentation/ && mkdocs serve; \
+    fi
 
 # Task to clean the project (remove .tox, .pytest_cache, etc.)
 clean:
     rm -rf .tox .pytest_cache dist
 
-# Task to build the package using Poetry
+# Task to build the package using Poetry or pip
 build:
-    poetry build
+    if [ -x "$(command -v poetry)" ]; then \
+        poetry build; \
+    else \
+        pip wheel . -w dist; \
+    fi
