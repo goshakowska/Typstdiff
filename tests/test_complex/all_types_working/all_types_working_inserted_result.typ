@@ -136,17 +136,18 @@ y$]
 ];#underline[It];#underline[ ];#underline[explains];#underline[
 ];#underline[Typst.]
 
-#underline[Sum];#underline[ ];#underline[is];#underline[ ];#underline[5.]
+#underline[Sum];#underline[ ];#underline[is];#underline[
+];#underline[\5.]
 
 #underline[The];#underline[ ];#underline[coordinates];#underline[
 ];#underline[are];#underline[ ];#underline[1,];#underline[
-];#underline[2.]
+];#underline[\2.]
 
 #underline[The];#underline[ ];#underline[first];#underline[
 ];#underline[element];#underline[ ];#underline[is];#underline[
-];#underline[1.];#underline[ ];#underline[The];#underline[
+];#underline[\1.];#underline[ ];#underline[The];#underline[
 ];#underline[last];#underline[ ];#underline[element];#underline[
-];#underline[is];#underline[ ];#underline[4.]
+];#underline[is];#underline[ ];#underline[\4.]
 
 #underline[Austen];#underline[ ];#underline[wrote];#underline[
 ];#underline[Persuasion.]
@@ -156,10 +157,10 @@ y$]
 
 #underline[The];#underline[ ];#underline[y];#underline[
 ];#underline[coordinate];#underline[ ];#underline[is];#underline[
-];#underline[2.]
+];#underline[\2.]
 
 #underline[(5,];#underline[ ];#underline[6,];#underline[
-];#underline[11)]
+];#underline[\11)]
 
 #underline[This];#underline[ ];#underline[is];#underline[
 ];#underline[shown]

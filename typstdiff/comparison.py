@@ -12,7 +12,8 @@ from typstdiff.errors import (
 
 class Comparison:
     """
-    Class for comparing and formatting Json files based on output from jsondiff.
+    Class for comparing and formatting Json files
+    based on output from jsondiff.
     In order to create Typst file with marked changes
     """
 
@@ -24,8 +25,10 @@ class Comparison:
         Parameters:
             new_path (str): Path to the new Json file.
             old_path (str): Path to the old Json file.
-            insert_format (str): Typst format for insertions. Default is "Underline".
-            delete_format (str): Typst format for deletions. Default is "Strikeout".
+            insert_format (str): Typst format for insertions.
+            Default is "Underline".
+            delete_format (str): Typst format for deletions.
+            Default is "Strikeout".
         """
 
         self.parsed_new_file = self.parse_load_file(new_path)
@@ -111,7 +114,8 @@ class Comparison:
         Parses and formats list or dict structure
         Parameters:
             para (list): List or dict to be parsed and formatted.
-            underline_strike (str): Underline if text was inserted, or Strikeout if text was deleted.
+            underline_strike (str): Underline if text was inserted,
+            or Strikeout if text was deleted.
         """
         if isinstance(para, list):
             for i, element in enumerate(para):
@@ -128,7 +132,8 @@ class Comparison:
         Parses and formats a header in the Json structure.
         Parameters:
             target (dict): The file to change is Json format.
-            position (int): The position of the changed header in the Json structure.
+            position (int): The position of the changed header
+            in the Json structure.
             format_action (str): The formatting action to apply.
         """
         for i, element in enumerate(target[position]["c"]):
@@ -144,7 +149,8 @@ class Comparison:
         Formats changes in the JSON structure based on the specified action.
         Parameters:
             target (dict or list): The file to change is Json format.
-            position (int or char): The position of the change in the Json structure.
+            position (int or char): The position of the change
+            in the Json structure.
             format_action (str): The formatting action to apply.
         Returns:
             dict: Fragment with changes to insert to new file.
@@ -185,7 +191,8 @@ class Comparison:
 
     def update_index(self, diffs):
         """
-        Updates the indices in the differences dictionary to account for changes.
+        Updates the indices in the differences dictionary
+        to account for changes.
         Parameters:
             diffs: The dictionary of differences.
         Returns:
@@ -212,7 +219,8 @@ class Comparison:
             diffs: The dictionary of differences.
             target: The target JSON structure to update.
             old_target: The original target JSON structure.
-            index: The index or index tuple indicating the position of the change.
+            index: The index or index tuple indicating
+            the position of the change.
         """
         diffs = self.update_index(diffs)
         index, index_update = self.split_index_tuple(index)
@@ -252,7 +260,8 @@ class Comparison:
 
     def parse(self):
         """
-        Main function to parse and apply the differences between the old and new Json structures.
+        Main function to parse and apply the differences between
+        the old and new Json structures.
         It is seperated to 3 parts: update, insert, delete.
         """
         try:
@@ -319,7 +328,8 @@ class Comparison:
 
     def process_insert(self, diffs, target, parsed_old_file):
         """
-        Processes insertions in the Json structure based on the differences dictionary.
+        Processes insertions in the Json structure
+        based on the differences dictionary.
         Parameters:
             diffs: The list of insertions.
             target: The target Json structure.
@@ -337,7 +347,8 @@ class Comparison:
 
     def process_delete(self, diffs, target, parsed_old_file, parsed_new_file):
         """
-        Processes deletions in the Json structure based on the differences dictionary.
+        Processes deletions in the Json structure
+        based on the differences dictionary.
         Parameters:
             diffs: The list of deletions.
             target: The target Json structure.
@@ -361,7 +372,8 @@ class Comparison:
         self, diffs, target, parsed_old_file, parsed_new_file, current_action, only
     ):
         """
-        Processes updates in the JSON structure based on the differences dictionary.
+        Processes updates in the JSON structure based on
+        the differences dictionary.
         Parameters:
             diffs: The dictionary of differences.
             target: The target Json structure.
@@ -432,7 +444,8 @@ class Comparison:
         Parameters:
             diffs (dict): The dictionary of differences.
         Returns:
-            dict: The updated differences dictionary with adjusted insertion indexes.
+            dict: The updated differences dictionary
+            with adjusted insertion indexes.
         """
         for key, value in diffs.items():
             if isinstance(key, Symbol):
@@ -475,7 +488,6 @@ class Comparison:
         return sorted_diffs
 
     def apply_diffs_recursive(
-            
         self, diffs, target, current_action, parsed_old_file, parsed_new_file, only
     ):
         """
@@ -484,7 +496,8 @@ class Comparison:
             diffs (dict): The dictionary of differences.
             target (dict): The target Json structure.
             current_action (str): The current action being processed.
-            parsed_old_file (dict): The original Json structure before the changes.
+            parsed_old_file (dict): The original Json
+            structure before the changes.
             parsed_new_file (dict): The new Json structure after the changes.
             only (str): The action type to process.
         """

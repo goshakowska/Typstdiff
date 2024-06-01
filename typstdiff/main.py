@@ -35,7 +35,8 @@ def isValidHexaCode(hex_string):
     Parameters:
         hex_string (str): The string to be checked.
     Returns:
-        bool: True if the string is a valid hexadecimal color code, False otherwise.
+        bool: True if the string is a valid hexadecimal color code,
+        False otherwise.
     """
     if (
         hex_string.startswith("#")
@@ -48,11 +49,13 @@ def isValidHexaCode(hex_string):
 
 def parse_color_param(provided_color):
     """
-    Parses a provided color parameter and returns the corresponding color value.
+    Parses a provided color parameter and
+    returns the corresponding color value.
     Parameters:
         provided_color (str): The color parameter to be parsed.
     Returns:
-        str or None: The corresponding color value if it is a predefined color or a valid hexadecimal color code. None otherwise.
+        str or None: The corresponding color value if it is a predefined color
+        or a valid hexadecimal color code. None otherwise.
     """
     for key_tuple in typst_predefined_colors:
         if provided_color in key_tuple:
@@ -66,11 +69,14 @@ def parse_color_param(provided_color):
 
 def format_styles(custom_setting):
     """
-    Generates a list of format lines based on the provided custom settings for highlighting and font styles.
+    Generates a list of format lines based on the provided custom
+    settings for highlighting and font styles.
     Parameters:
-        custom_setting (CustomSetting): An object containing the custom settings for highlighting and font styles.
+        custom_setting (CustomSetting): An object containing the custom
+        settings for highlighting and font styles.
     Returns:
-        List[str]: A list of format lines that can be used to customize the appearance of inserted and deleted changes in a Typst file.
+        List[str]: A list of format lines that can be used to customize
+        the appearance of inserted and deleted changes in a Typst file.
     """
     format_lines = []
 
@@ -81,14 +87,16 @@ def format_styles(custom_setting):
 
     if insert_highlight:
         format_lines.append(
-            f"#show underline : it => {{highlight(fill: {insert_highlight}, text({insert_font or 'black'}, it))}}"
+            f"#show underline : it => {{highlight(fill: {insert_highlight},"
+            f" text({insert_font or 'black'}, it))}}"
         )
     elif insert_font:
         format_lines.append(f"#show underline : it => {{text({insert_font}, it)}}")
 
     if delete_highlight:
         format_lines.append(
-            f"#show strike : it => {{highlight(fill: {delete_highlight}, text({delete_font or 'black'}, it))}}"
+            f"#show strike : it => {{highlight(fill: {delete_highlight},"
+            f" text({delete_font or 'black'}, it))}}"
         )
     elif delete_font:
         format_lines.append(f"#show strike : it => {{text({delete_font}, it)}}")
@@ -104,7 +112,8 @@ def check_if_typst_extension(filename):
     Returns:
         str: The original filename if it has a .typ extension and exists.
     Raises:
-        argparse.ArgumentTypeError: If the filename does not have a .typ extension or if it does not exist.
+        argparse.ArgumentTypeError: If the filename does not have
+          a .typ extension or if it does not exist.
     """
     if not filename.lower().endswith(".typ"):
         raise argparse.ArgumentTypeError(
@@ -139,9 +148,11 @@ def get_file_path_without_extension(filename):
 
 def main(arguments):
     """
-    Parses command line arguments and performs the main functionality of the program.
+    Parses command line arguments and performs the main
+    functionality of the program.
     Parameters:
-        arguments (List[str]): The command line arguments passed to the program.
+        arguments (List[str]): The command line arguments
+        passed to the program.
     Returns:
         None
     Raises:
@@ -150,7 +161,8 @@ def main(arguments):
     parser = argparse.ArgumentParser(
         prog="TypstDiff",
         description="Mark differences between two Typst files.",
-        epilog="Copyright (c) 2024, Dominika Ferfecka, Sara Fojt, Małgorzata Kozłowska",
+        epilog="Copyright (c) 2024, Dominika Ferfecka,"
+        + " Sara Fojt, Małgorzata Kozłowska",
     )
 
     parser.add_argument(
@@ -214,12 +226,14 @@ def main(arguments):
 
     if args.only_inserted and (args.delete_highlight or args.delete_font):
         print(
-            "Can't use --only-inserted functionality and customize --delete-highlight or --delete-font simultaneously."
+            "Can't use --only-inserted functionality and customize "
+            "--delete-highlight or --delete-font simultaneously."
         )
 
     if args.only_deleted and (args.insert_highlight or args.insert_font):
         print(
-            "Can't use --only-deleted functionality and customize --insert-highlight or --insert-font simultaneously."
+            "Can't use --only-deleted functionality and customize "
+            "--insert-highlight or --insert-font simultaneously."
         )
 
     format_lines = format_styles(args)
@@ -232,12 +246,6 @@ def main(arguments):
         "typst", "json", f"{args.old_version}.typ", f"{args.old_version}.json"
     )
     comparison = Comparison(f"{args.new_version}.json", f"{args.old_version}.json")
-
-    # Handle the optional parameters - TODO ?
-    if args.only_inserted:
-        comparison.show_only_inserted()
-    if args.only_deleted:
-        comparison.show_only_deleted()
 
     comparison.parse()
     print(comparison.parsed_new_file)

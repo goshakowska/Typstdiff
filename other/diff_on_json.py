@@ -2,13 +2,13 @@ from jsondiff import diff
 import json
 
 # dokumenty zamienione z typsta
-with open('old_v.json', 'rb') as old_file:
+with open("old_v.json", "rb") as old_file:
     parsed_old_file = json.load(old_file)
 
-with open('new_v.json', 'rb') as changed_file:
+with open("new_v.json", "rb") as changed_file:
     parsed_changed_file = json.load(changed_file)
 
-print(diff(parsed_old_file, parsed_changed_file, syntax='explicit', dump=True))
+print(diff(parsed_old_file, parsed_changed_file, syntax="explicit", dump=True))
 
 
 # # json niezmieniony

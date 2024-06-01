@@ -15,8 +15,10 @@ class FileConverter:
         Writes Json data to a file.
         Parameters:
             json_data (dict): The Json data to be written.
-            output_file (str): The path to the output file. Default is 'comparison_new.json'.
-            indent (int): The number of spaces used for indentation. Default is 4.
+            output_file (str): The path to the output file.
+            Default is 'comparison_new.json'.
+            indent (int): The number of spaces used for indentation.
+            Default is 4.
         """
         with open(output_file, "w") as updated_file:
             json.dump(json_data, updated_file, indent=indent)

@@ -102,7 +102,7 @@ Sum is 5.
 The #strike[coordinates];#underline[CHANGED] are 1, 2.
 
 The #strike[first];#underline[CHANGED] element is
-#strike[1.];#underline[5.] The last element is 4.
+#strike[\1.];#underline[\5.] The last element is 4.
 
 Austen wrote Persuasion.
 
