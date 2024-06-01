@@ -224,7 +224,6 @@ def main():
     comparison = Comparison(f"{args.new_version}.json", f"{args.old_version}.json")
 
     comparison.parse()
-    print(comparison.parsed_new_file)
     file_converter.write_to_json_file(
         comparison.parsed_changed_file, f"{args.diff_output_file}.json"
     )
