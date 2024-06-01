@@ -171,20 +171,8 @@ def main(arguments):
     parser.add_argument(
         "new_version", type=str, help="Path to a new version of Typst file"
     )
-    parser.add_argument("diff_output_file", type=str, help="Path to the output diff file")
-
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument(
-        "-ins",
-        "--only-inserted",
-        help="Only show inserted changes to new Typst file",
-        action="store_true",
-    )
-    group.add_argument(
-        "-del",
-        "--only-deleted",
-        help="Only show deleted changes to new Typst file",
-        action="store_true",
+    parser.add_argument(
+        "diff_output_file", type=str, help="Path to the output diff file"
     )
 
     parser.add_argument(
@@ -222,18 +210,6 @@ def main(arguments):
         check_if_typst_extension(getattr(args, arg_name))
         setattr(
             args, arg_name, get_file_name_without_extension(getattr(args, arg_name))
-        )
-
-    if args.only_inserted and (args.delete_highlight or args.delete_font):
-        print(
-            "Can't use --only-inserted functionality and customize "
-            "--delete-highlight or --delete-font simultaneously."
-        )
-
-    if args.only_deleted and (args.insert_highlight or args.insert_font):
-        print(
-            "Can't use --only-deleted functionality and customize "
-            "--insert-highlight or --insert-font simultaneously."
         )
 
     format_lines = format_styles(args)
