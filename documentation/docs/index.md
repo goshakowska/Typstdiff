@@ -13,6 +13,8 @@ For the source code visit [Gitlab](https://gitlab-stud.elka.pw.edu.pl/dferfeck/z
 
 ## Project layout
     assets/                             # Folder for examples files used to comparing with typstdiff
+        example1/                       # Files for example1 (check pdf for example)
+        example2/                       # Files for example2 (check pdf for example)
     dist/                               # Folder for tar of package typstdiff
     documentation/
         mkdocs.yml                      # The configuration file
